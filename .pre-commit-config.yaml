@@ -1,0 +1,68 @@
+default_install_hook_types: [pre-commit, commit-msg]
+default_language_version:
+  python: python3.10
+  node: 16.17.1
+repos:
+  - repo: https://github.com/python-poetry/poetry
+    rev: 1.2.2
+    hooks:
+      - id: poetry-check
+        verbose: true
+      - id: poetry-lock
+        verbose: true
+      - id: poetry-export
+        args:
+          [
+            "--with",
+            "dev",
+            "-f",
+            "requirements.txt",
+            "-o",
+            "requirements.txt",
+            "--without-hashes",
+          ]
+        verbose: true
+
+  - repo: local
+    hooks:
+      - id: yapf
+        name: yapf
+        entry: yapf
+        language: system
+        types: [python]
+        args: [--in-place]
+        verbose: true
+      - id: isort
+        name: isort
+        entry: isort
+        language: system
+        types: [python]
+        args: []
+        verbose: true
+      - id: mypy
+        name: mypy
+        entry: mypy
+        language: system
+        types: [python]
+        args: []
+        exclude: wsgi.py
+        require_serial: true
+        verbose: true
+      - id: flake8
+        name: flake8
+        entry: flake8
+        language: system
+        types: [python]
+        args: []
+        require_serial: true
+        verbose: true
+
+  - repo: https://github.com/arlenxuzj/commitlint-pre-commit-hook
+    rev: 1.0.1
+    hooks:
+      - id: commitlint
+        stages:
+          - commit-msg
+        additional_dependencies:
+          - "@commitlint/config-conventional@17.2.0"
+        verbose: true
