@@ -17,19 +17,12 @@ class ShoppingCartType(Enum):
 class ShoppingCart(BaseModel):
     user_id: str
     product_id: str
-    #  quantity: int | None  # optional
-    quantity: int | None
+    quantity: int | None  # optional
     type: ShoppingCartType
 
 
 @shopping_cart.route('/v1/shoppingcart', methods=['POST'])
 def v1_shoppingcart():
-    # if request.method == 'GET':
-    #     name = request.args.get('name')
-    #     age = request.args.get('age')
-    #     return {'name': f'Hello, {name}', 'age': f'Hello, {age}'}
-
-    # return {'message': 'Method Not Allowed'}, 405
     if request.is_json:  # read from body
         body = request.get_json()
         if body is not None:
@@ -42,11 +35,10 @@ def v1_shoppingcart():
 
                 # Update
                 if shopping_cart.type == ShoppingCartType.update:
-                    sql1 = """select * from public."YAMI_SHOPPING_CART"
+                    sql = """select * from public."YAMI_SHOPPING_CART"
                     where product_id = %s and user_id = %s"""
                     cur.execute(
-                        sql1,
-                        (shopping_cart.product_id, shopping_cart.user_id))
+                        sql, (shopping_cart.product_id, shopping_cart.user_id))
                     data = cur.fetchone()
                     if data is None:
                         sql = """insert into public."YAMI_SHOPPING_CART"
@@ -75,6 +67,7 @@ def v1_shoppingcart():
                         cur.close()
                         conn.close()
                         return 'success update'
+
                 # Remove
                 else:
                     sql = """delete from public."YAMI_SHOPPING_CART"
