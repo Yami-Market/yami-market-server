@@ -86,7 +86,7 @@ def v1_shoppingcart():
                 return {'message': 'JSON data is not correct'}, 400
             except Exception as e:
                 print(e)
-                return {'message': 'Something is wrong'}, 400
+                return {'message': 'Something is wrong'}, 500
         else:
             return {'message': 'request body is empty'}, 400
     else:
