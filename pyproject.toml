@@ -39,4 +39,5 @@ profile = "hug"
 
 [tool.mypy]
 check_untyped_defs = true
+ignore_missing_imports = true
 plugins = "pydantic.mypy"
