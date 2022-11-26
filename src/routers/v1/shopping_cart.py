@@ -1,11 +1,13 @@
 from enum import Enum
 
-from flask import Blueprint, request
+from flask import Blueprint, abort, jsonify, request
 from pydantic import BaseModel, ValidationError
 
 from db.connection import get_db_connection
 
-shopping_cart = Blueprint('shopping_cart', __name__)
+shopping_cart = Blueprint(name='shopping_cart',
+                          import_name=__name__,
+                          url_prefix='/v1/shoppingcart')
 
 
 class ShoppingCartType(Enum):
@@ -21,7 +23,12 @@ class ShoppingCart(BaseModel):
     type: ShoppingCartType
 
 
-@shopping_cart.route('/v1/shoppingcart', methods=['POST'])
+@shopping_cart.route('', methods=['GET'])
+def get_shopping_cart_v1():
+    return jsonify(message='get shopping cart v1'), 200
+
+
+@shopping_cart.route('', methods=['POST'])
 def v1_shoppingcart():
     if request.is_json:  # read from body
         body = request.get_json()
@@ -90,4 +97,4 @@ def v1_shoppingcart():
         else:
             return {'message': 'request body is empty'}, 400
     else:
-        return {'message': 'request body must be JSON'}, 400
+        abort(400, 'request body must be JSON')
