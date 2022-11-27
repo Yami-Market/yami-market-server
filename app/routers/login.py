@@ -9,7 +9,7 @@ from app.utils.response_message import ClientErrorMessage
 bp = Blueprint(name='login', import_name=__name__, url_prefix='/v1')
 
 
-@bp.route('/login', methods=['POST'])
+@bp.post('/login')
 def login():
     if request.is_json:
         body = request.get_json()

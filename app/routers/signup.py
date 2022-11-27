@@ -10,7 +10,7 @@ from app.utils.response_message import ClientErrorMessage
 bp = Blueprint(name='signup', import_name=__name__, url_prefix='/v1')
 
 
-@bp.route('/signup', methods=['POST'])
+@bp.post('/signup')
 def signup():
     if request.is_json:
         body = request.get_json()

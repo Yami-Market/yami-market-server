@@ -14,7 +14,7 @@ from app.utils.response_message import ClientErrorMessage
 bp = Blueprint(name='shopping_cart', import_name=__name__, url_prefix='/v1')
 
 
-@bp.route('/shoppingcart', methods=['GET'])
+@bp.get('/shoppingcart')
 @jwt_required()
 def get_shopping_cart():
     app.logger.debug(current_user)
@@ -24,7 +24,7 @@ def get_shopping_cart():
     return jsonify(user_shopping_cart.dict()), 200
 
 
-@bp.route('/shoppingcart/<string:product_id>', methods=['PUT'])
+@bp.put('/shoppingcart/<string:product_id>')
 @jwt_required()
 def add_product_to_shopping_cart(product_id: str):
     if request.is_json:
@@ -47,7 +47,7 @@ def add_product_to_shopping_cart(product_id: str):
 
 
 # TODO : Implement delete product from shopping cart
-@bp.route('/shoppingcart/<string:product_id>', methods=['DELETE'])
+@bp.delete('/shoppingcart/<string:product_id>')
 @jwt_required()
 def remove_product_from_shopping_cart(product_id: str):
     pass
