@@ -31,6 +31,12 @@ def method_not_allowed(error):
     return jsonify(message=ClientErrorMessage.method_not_allowed), 405
 
 
+# Unsupported Media Type handler
+@bp.app_errorhandler(415)
+def unsupported_media_type(error):
+    return jsonify(message=ClientErrorMessage.unsupported_media_type), 415
+
+
 # Server Error handler
 @bp.app_errorhandler(500)
 def server_error(error):

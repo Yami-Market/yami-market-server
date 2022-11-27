@@ -1,15 +1,17 @@
 from flask import Blueprint, abort
 from flask import current_app as app
 from flask import jsonify, request
+from flask.wrappers import Response
 from flask_jwt_extended import current_user, jwt_required
 from pydantic import ValidationError
 
 from app.models.shopping_cart_model import ShoppingCartBodyParams
 from app.services.shopping_cart_service import (
+    create_user_shopping_cart_product,
     get_user_shopping_cart,
-    update_user_shopping_cart,
+    get_user_shopping_cart_product,
+    update_user_shopping_cart_product,
 )
-from app.utils.response_message import ClientErrorMessage
 
 bp = Blueprint(name='shopping_cart', import_name=__name__, url_prefix='/v1')
 
@@ -33,17 +35,26 @@ def add_product_to_shopping_cart(product_id: str):
             try:
                 shopping_cart_params = ShoppingCartBodyParams(**body)
 
-                update_user_shopping_cart(current_user, product_id,
-                                          shopping_cart_params)
+                product = get_user_shopping_cart_product(
+                    current_user, product_id)
 
-                return jsonify(message='Shopping cart update success'), 200
+                if product is None:
+                    create_user_shopping_cart_product(current_user, product_id,
+                                                      shopping_cart_params)
+
+                    return Response(status=201)
+
+                update_user_shopping_cart_product(current_user, product_id,
+                                                  shopping_cart_params)
+
+                return Response(status=204)
 
             except ValidationError as e:
                 return jsonify(e.errors()), 400
         else:
-            abort(400, ClientErrorMessage.empty_json_body)
+            abort(400)
     else:
-        abort(400, ClientErrorMessage.invalid_json_body)
+        abort(415)
 
 
 # TODO : Implement delete product from shopping cart

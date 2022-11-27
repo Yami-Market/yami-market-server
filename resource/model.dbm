@@ -187,13 +187,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="name" not-null="true">
 		<type name="character varying" length="125"/>
 	</column>
-	<column name="unit_price" default-value="0.0">
+	<column name="unit_price" not-null="true" default-value="0.0">
 		<type name="numeric" length="10" precision="2"/>
 	</column>
 	<column name="image_url">
 		<type name="text" length="0"/>
 	</column>
-	<column name="third_category_id">
+	<column name="third_category_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
 	<constraint name="product_key" type="pk-constr" table="public.product">
@@ -226,7 +226,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="name" not-null="true">
 		<type name="character varying" length="50"/>
 	</column>
-	<column name="second_category_id">
+	<column name="second_category_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
 	<constraint name="third_category_pkey" type="pk-constr" table="public.third_category">
@@ -506,7 +506,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 custom-color="#ed98f1"
 	 src-table="public.third_category"
 	 dst-table="public.second_category" reference-fk="second_category_id_fkey"
-	 src-required="false" dst-required="false">
+	 src-required="false" dst-required="true">
 	<label ref-type="name-label">
 		<position x="29.2639" y="-19.853"/>
 	</label>
@@ -516,7 +516,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 custom-color="#08faef"
 	 src-table="public.product"
 	 dst-table="public.third_category" reference-fk="third_category_id_fkey"
-	 src-required="false" dst-required="false">
+	 src-required="false" dst-required="true">
 	<label ref-type="name-label">
 		<position x="-5.72337" y="-17.953"/>
 	</label>

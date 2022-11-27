@@ -3,9 +3,7 @@ from enum import Enum
 
 class ClientErrorMessage(str, Enum):
     method_not_allowed = 'Method Not Allowed'
-
-    invalid_json_body = 'Request Body is not JSON'
-    empty_json_body = 'Request Body is Empty'
+    unsupported_media_type = 'Unsupported Media Type'
 
     wrong_email_or_password = 'Wrong Email or Password'
     email_already_exists = 'Email already exists'

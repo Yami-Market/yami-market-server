@@ -32,6 +32,6 @@ def signup():
             except ValidationError as e:
                 return jsonify(e.errors()), 400
         else:
-            abort(400, ClientErrorMessage.empty_json_body)
+            abort(400)
     else:
-        abort(400, ClientErrorMessage.invalid_json_body)
+        abort(415)
