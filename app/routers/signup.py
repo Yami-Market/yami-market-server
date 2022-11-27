@@ -3,8 +3,9 @@ from flask import current_app as app
 from flask import jsonify, request
 from pydantic import ValidationError
 
-from app.models.user import NewUser
-from app.services.user import create_new_user, get_user_by_email
+from app.models.user_model import NewUser
+from app.services.user_service import create_new_user, get_user_by_email
+from app.utils.response_message import ClientErrorMessage
 
 bp = Blueprint(name='signup', import_name=__name__, url_prefix='/v1')
 
@@ -16,25 +17,21 @@ def signup():
         if body is not None:
             try:
                 new_user = NewUser(**body)
-                new_user2 = NewUser(**body)
-
-                app.logger.debug(new_user)
-                app.logger.debug(new_user2)
 
                 app.logger.debug(new_user)
 
                 exist_user = get_user_by_email(new_user.email)
 
                 if exist_user is not None:
-                    return abort(400, 'email already exists')
+                    return abort(400, ClientErrorMessage.email_already_exists)
 
                 create_new_user(new_user)
 
-                return jsonify(message='signup success')
+                return jsonify(message='Signup success')
 
             except ValidationError as e:
                 return jsonify(e.errors()), 400
         else:
-            abort(400, 'request body is empty')
+            abort(400, ClientErrorMessage.empty_json_body)
     else:
-        abort(400, 'request body is not json')
+        abort(400, ClientErrorMessage.invalid_json_body)

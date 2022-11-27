@@ -1,32 +1,26 @@
-import psycopg2
-import psycopg2.extras
-import psycopg2.pool
+import os
 
+from dotenv import load_dotenv
+from psycopg_pool import ConnectionPool
 
-def create_db_connection_pool(host: str | None,
-                              database: str | None,
-                              user: str | None,
-                              password: str | None,
-                              *,
-                              minconn=1,
-                              maxconn=20):
+load_dotenv()
 
-    if host is None:
-        raise ValueError('db host is not set')
-    elif database is None:
-        raise ValueError('db name is not set')
-    elif user is None:
-        raise ValueError('db username is not set')
-    elif password is None:
-        raise ValueError('db password is not set')
+DB_HOST = os.getenv('DB_HOST')
+DB_NAME = os.getenv('DB_NAME')
+DB_USERNAME = os.getenv('DB_USERNAME')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
 
-    pool = psycopg2.pool.SimpleConnectionPool(
-        minconn=minconn,
-        maxconn=maxconn,
-        host=host,
-        database=database,
-        user=user,
-        password=password,
-        cursor_factory=psycopg2.extras.RealDictCursor)
+if DB_HOST is None:
+    raise ValueError('DB_HOST is not set')
+if DB_NAME is None:
+    raise ValueError('DB_NAME is not set')
+if DB_USERNAME is None:
+    raise ValueError('DB_USERNAME is not set')
+if DB_PASSWORD is None:
+    raise ValueError('DB_PASSWORD is not set')
 
-    return pool
+pool = ConnectionPool(
+    f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}',
+    min_size=1,
+    max_size=20,
+)

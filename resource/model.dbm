@@ -159,7 +159,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="shopping_cart" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+<table name="shopping_cart" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="311" y="916"/>
@@ -174,12 +174,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<constraint name="shopping_cart_pkey" type="pk-constr" table="public.shopping_cart">
 		<columns names="product_id,user_id" ref-type="src-columns"/>
-	</constraint>
-	<constraint name="user_id_key" type="uq-constr" table="public.shopping_cart">
-		<columns names="user_id" ref-type="src-columns"/>
-	</constraint>
-	<constraint name="product_id_key" type="uq-constr" table="public.shopping_cart">
-		<columns names="product_id" ref-type="src-columns"/>
 	</constraint>
 </table>
 

@@ -1,96 +1,53 @@
-from enum import Enum
+from flask import Blueprint, abort
+from flask import current_app as app
+from flask import jsonify, request
+from flask_jwt_extended import current_user, jwt_required
+from pydantic import ValidationError
 
-from flask import Blueprint, abort, jsonify, request
-from pydantic import BaseModel, ValidationError
+from app.models.shopping_cart_model import ShoppingCartBodyParams
+from app.services.shopping_cart_service import (
+    get_user_shopping_cart,
+    update_user_shopping_cart,
+)
+from app.utils.response_message import ClientErrorMessage
 
 bp = Blueprint(name='shopping_cart', import_name=__name__, url_prefix='/v1')
 
 
-class ShoppingCartType(Enum):
-    update = 'update'
-    remove = 'remove'
-
-
-# Model
-class ShoppingCart(BaseModel):
-    user_id: str
-    product_id: str
-    quantity: int | None  # optional
-    type: ShoppingCartType
-
-
 @bp.route('/shoppingcart', methods=['GET'])
+@jwt_required()
 def get_shopping_cart():
-    return jsonify(message='get shopping cart v1'), 200
+    app.logger.debug(current_user)
+    # app.logger.debug(get_jwt_identity())
+    # app.logger.debug(get_current_user())
+    user_shopping_cart = get_user_shopping_cart(current_user)
+    return jsonify(user_shopping_cart.dict()), 200
 
 
-@bp.route('/shoppingcart', methods=['POST'])
-def shopping_cart():
+@bp.route('/shoppingcart/<string:product_id>', methods=['PUT'])
+@jwt_required()
+def add_product_to_shopping_cart(product_id: str):
     if request.is_json:
-        # read from body
         body = request.get_json()
         if body is not None:
             try:
-                shopping_cart = ShoppingCart(**body)
-                print(shopping_cart)
+                shopping_cart_params = ShoppingCartBodyParams(**body)
 
-                # conn = get_db_connection()
-                # cur = conn.cursor()
+                update_user_shopping_cart(current_user, product_id,
+                                          shopping_cart_params)
 
-                # # Update
-                # if shopping_cart.type == ShoppingCartType.update:
-                #     sql = """select * from public."YAMI_SHOPPING_CART"
-                #     where product_id = %s and user_id = %s"""
-                #     cur.execute(
-                #         sql, (shopping_cart.product_id,
-                # shopping_cart.user_id))
-                #     data = cur.fetchone()
-                #     if data is None:
-                #         sql = """insert into public."YAMI_SHOPPING_CART"
-                #                     (user_id, product_id, quantity)
-                #                     values (%s,%s,%s);
-                #             """
-                #         cur.execute(sql, (
-                #             shopping_cart.user_id,
-                #             shopping_cart.product_id,
-                #             shopping_cart.quantity,
-                #         ))
-                #         conn.commit()
-                #         cur.close()
-                #         conn.close()
-                #         return 'success insert'
-                #     else:
-                #         sql = """ update public."YAMI_SHOPPING_CART"
-                #         set quantity = %s
-                #         where product_id = %s and user_id = %s
-                #         """
-                #         cur.execute(
-                #             sql,
-                #             (shopping_cart.quantity, shopping_cart.product_id,
-                #              shopping_cart.user_id))
-                #         conn.commit()
-                #         cur.close()
-                #         conn.close()
-                #         return 'success update'
-
-                # # Remove
-                # else:
-                #     sql = """delete from public."YAMI_SHOPPING_CART"
-                #             where product_id = %s and user_id = %s;
-                #     """
-                #     cur.execute(sql, (
-                #         shopping_cart.product_id,
-                #         shopping_cart.user_id,
-                #     ))
-                #     conn.commit()
-                #     cur.close()
-                #     conn.close()
-                #     return 'successful remove'
+                return jsonify(message='Shopping cart update success'), 200
 
             except ValidationError as e:
-                print(e)
-                abort(400, 'JSON data is not correct')
+                return jsonify(e.errors()), 400
         else:
-            abort(400, 'request body is empty')
+            abort(400, ClientErrorMessage.empty_json_body)
     else:
-        abort(400, 'request body must be JSON')
+        abort(400, ClientErrorMessage.invalid_json_body)
+
+
+# TODO : Implement delete product from shopping cart
+@bp.route('/shoppingcart/<string:product_id>', methods=['DELETE'])
+@jwt_required()
+def remove_product_from_shopping_cart(product_id: str):
+    pass
