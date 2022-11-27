@@ -655,7 +655,6 @@ python-versions = ">=3.7"
 [package.dependencies]
 "backports.zoneinfo" = {version = ">=0.2.0", markers = "python_version < \"3.9\""}
 psycopg-binary = {version = "3.1.4", optional = true, markers = "extra == \"binary\""}
-psycopg-c = {version = "3.1.4", optional = true, markers = "extra == \"c\""}
 psycopg-pool = {version = "*", optional = true, markers = "extra == \"pool\""}
 typing-extensions = {version = ">=4.1", markers = "python_version < \"3.11\""}
 tzdata = {version = "*", markers = "sys_platform == \"win32\""}
@@ -670,14 +669,6 @@ test = ["mypy (>=0.981)", "pproxy (>=2.7)", "pytest (>=6.2.5)", "pytest-asyncio 
 
 [[package]]
 name = "psycopg-binary"
-version = "3.1.4"
-description = "PostgreSQL database adapter for Python -- C optimisation distribution"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[[package]]
-name = "psycopg-c"
 version = "3.1.4"
 description = "PostgreSQL database adapter for Python -- C optimisation distribution"
 category = "main"
@@ -1030,7 +1021,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "6b6868a5042ac2cfdc8df5d45f28c7053d5756169794ec8a5d37dad73864661e"
+content-hash = "898932f212b801783750b00c3fb5944d8354bc6544c28d2cff80afd617ec4dcb"
 
 [metadata.files]
 appnope = [
@@ -1520,9 +1511,6 @@ psycopg-binary = [
     {file = "psycopg_binary-3.1.4-cp39-cp39-musllinux_1_1_ppc64le.whl", hash = "sha256:9a716ee67f11922d3a6f6eee9c3f4e26853cf1fd2da0808c84f1eeb2b2783e69"},
     {file = "psycopg_binary-3.1.4-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:61d51110153230c6c4cfd45facde82ffa5f3a83bf72564b06d761bd66a3e31d6"},
     {file = "psycopg_binary-3.1.4-cp39-cp39-win_amd64.whl", hash = "sha256:86bf10ed317523a88f361a8d9543bf4459ed93d5af7acc7b534b5c37f1ea1929"},
-]
-psycopg-c = [
-    {file = "psycopg-c-3.1.4.tar.gz", hash = "sha256:de3a2883bf46dd2d151f3332b9ecb15fce0ff6ff302a196d1e9de6f36b79eeaa"},
 ]
 psycopg-pool = [
     {file = "psycopg-pool-3.1.4.tar.gz", hash = "sha256:fbbb61442f1c59dd53b606b489683c83ca64b3bcf64c6e47e955c8bfa59beac7"},
