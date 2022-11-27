@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["ESNext"],
+    "moduleResolution": "node",
+    "allowJs": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true
+  },
+  "include": ["."],
+  "exclude": ["node_modules"]
+}
