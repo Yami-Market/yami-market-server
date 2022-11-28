@@ -58,7 +58,6 @@ def add_product_to_shopping_cart(product_id: str):
         abort(415)
 
 
-# TODO : Implement delete product from shopping cart
 @bp.delete('/shoppingcart/<string:product_id>')
 @jwt_required()
 def remove_product_from_shopping_cart(product_id: str):
