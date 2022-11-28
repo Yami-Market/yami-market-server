@@ -45,5 +45,5 @@ DB_PASSWORD=your_db_password
 ## Run the Server
 
 ```bash
-python src/app.py
+flask --app app --debug run
 ```
