@@ -1,4 +1,4 @@
-from src.app import app
+from app import create_app
+from config import ProductionConfig
 
-if __name__ == '__main__':
-    app.run(debug=False)
+app = create_app(ProductionConfig)
