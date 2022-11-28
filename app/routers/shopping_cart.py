@@ -61,4 +61,7 @@ def add_product_to_shopping_cart(product_id: str):
 @bp.delete('/shoppingcart/<string:product_id>')
 @jwt_required()
 def remove_product_from_shopping_cart(product_id: str):
+    app.logger.debug(current_user)
+    app.logger.debug(product_id)
+
     pass
