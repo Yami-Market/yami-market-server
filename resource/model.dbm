@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="18"
+	 default-schema="public" default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<database name="yami-market" encoding="UTF8" lc-collate="C" lc-ctype="C" is-template="false" allow-conns="true">
+	<role name="postgres"/>
+	<tablespace name="pg_default"/>
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<usertype name="user_gender" configuration="enumeration">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<enumeration label="male"/>
+	<enumeration label="female"/>
+	<enumeration label="others"/>
+	<enumeration label="unknown"/>
+</usertype>
+
+<table name="order" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1408" y="55"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="12" precision="0"/>
+	</column>
+	<column name="order_amount" not-null="true" default-value="0.0">
+		<type name="numeric" length="10" precision="2"/>
+	</column>
+	<column name="order_date" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0" precision="3"/>
+	</column>
+	<column name="ship_date">
+		<type name="timestamptz" length="0" precision="3"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="payment_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="shipping_address_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="billing_address_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<constraint name="order_pkey" type="pk-constr" table="public.&quot;order&quot;">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="address" layers="0" collapse-mode="2" max-obj-count="13" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="634" y="52"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="first_name">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="last_name">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="street_address">
+		<type name="character varying" length="125"/>
+	</column>
+	<column name="optional_address">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="city">
+		<type name="character varying" length="25"/>
+	</column>
+	<column name="state">
+		<type name="character varying" length="25"/>
+	</column>
+	<column name="country">
+		<type name="character varying" length="30"/>
+	</column>
+	<column name="zip_code">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="phone_number">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<constraint name="address_pkey" type="pk-constr" table="public.address">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="credit_card" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="823" y="733"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="card_type" not-null="true">
+		<type name="character varying" length="25"/>
+	</column>
+	<column name="card_number" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="card_holder_name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="card_expiry_month" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="card_expiry_year" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="cvv_code" not-null="true">
+		<type name="text" length="3" precision="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<constraint name="credit_card_pkey" type="pk-constr" table="public.credit_card">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="payment" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1088" y="404"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="paid_amount" not-null="true" default-value="0.0">
+		<type name="numeric" length="10" precision="2"/>
+	</column>
+	<column name="payment_date" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="card_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<constraint name="payment_pkey" type="pk-constr" table="public.payment">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="shopping_cart" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="311" y="916"/>
+	<column name="user_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="product_id" not-null="true">
+		<type name="character varying" length="25"/>
+	</column>
+	<column name="quantity" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="shopping_cart_pkey" type="pk-constr" table="public.shopping_cart">
+		<columns names="product_id,user_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="product" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1065" y="998"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="250"/>
+	</column>
+	<column name="unit_price" not-null="true" default-value="0.0">
+		<type name="numeric" length="10" precision="2"/>
+	</column>
+	<column name="image_url">
+		<type name="text" length="0"/>
+	</column>
+	<column name="third_category_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<constraint name="product_key" type="pk-constr" table="public.product">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="category" layers="0" collapse-mode="2" max-obj-count="2" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1685" y="868"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<constraint name="category_pkey" type="pk-constr" table="public.category">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="third_category" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1078" y="1282"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="second_category_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<constraint name="third_category_pkey" type="pk-constr" table="public.third_category">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="second_category" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1627" y="1089"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="category_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<constraint name="second_category_pkey" type="pk-constr" table="public.second_category">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="order_detail" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1599" y="529"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="order_quantity" not-null="true" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="product_id" not-null="true">
+		<type name="character varying" length="25"/>
+	</column>
+	<column name="order_id" not-null="true">
+		<type name="character varying" length="12" precision="0"/>
+	</column>
+	<constraint name="order_detail_pkey" type="pk-constr" table="public.order_detail">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="user" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="348" y="448"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="email" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="password" not-null="true">
+		<type name="character varying" length="105"/>
+	</column>
+	<column name="first_name">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="last_name">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="gender">
+		<type name="public.user_gender" length="0"/>
+	</column>
+	<constraint name="user_pkey" type="pk-constr" table="public.&quot;user&quot;">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="user_email_key" type="uq-constr" table="public.&quot;user&quot;">
+		<columns names="email" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="stage" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="2038" y="756"/>
+	<column name="product_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="product_name" not-null="true">
+		<type name="character varying" length="250"/>
+	</column>
+	<column name="category_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="category_name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="second_category_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="second_category_name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="third_category_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="third_category_name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="unit_price" not-null="true">
+		<type name="numeric" length="10" precision="2"/>
+	</column>
+	<column name="image_url" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+</table>
+
+<constraint name="user_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.&quot;order&quot;">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="payment_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.payment" table="public.&quot;order&quot;">
+	<columns names="payment_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="address_id_shipping_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.address" table="public.&quot;order&quot;">
+	<columns names="shipping_address_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="address_id_billing_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.address" table="public.&quot;order&quot;">
+	<columns names="billing_address_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="user_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.address">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="user_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.credit_card">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="user_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.payment">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="credit_card_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.credit_card" table="public.payment">
+	<columns names="card_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="user_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.shopping_cart">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="product_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.product" table="public.shopping_cart">
+	<columns names="product_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="third_category_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.third_category" table="public.product">
+	<columns names="third_category_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="second_category_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.second_category" table="public.third_category">
+	<columns names="second_category_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="category_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.category" table="public.second_category">
+	<columns names="category_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="product_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.product" table="public.order_detail">
+	<columns names="product_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="order_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;order&quot;" table="public.order_detail">
+	<columns names="order_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_order_user" type="relfk" layers="0"
+	 custom-color="#474ea6"
+	 src-table="public.&quot;order&quot;"
+	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="-12.6314" y="-14.6183"/>
+	</label>
+</relationship>
+
+<relationship name="rel_order_payment" type="relfk" layers="0"
+	 custom-color="#ae9f66"
+	 src-table="public.&quot;order&quot;"
+	 dst-table="public.payment" reference-fk="payment_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="-1.99837" y="-27.253"/>
+	</label>
+</relationship>
+
+<relationship name="rel_address_user" type="relfk" layers="0"
+	 custom-color="#424dff"
+	 src-table="public.address"
+	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<relationship name="rel_credit_card_user" type="relfk" layers="0"
+	 custom-color="#ba0d17"
+	 src-table="public.credit_card"
+	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="7.80522" y="-71.4537"/>
+	</label>
+</relationship>
+
+<relationship name="rel_payment_user" type="relfk" layers="0"
+	 custom-color="#865ae1"
+	 src-table="public.payment"
+	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<relationship name="rel_payment_credit_card" type="relfk" layers="0"
+	 custom-color="#3511bc"
+	 src-table="public.payment"
+	 dst-table="public.credit_card" reference-fk="credit_card_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="91.8052" y="-27.753"/>
+	</label>
+</relationship>
+
+<relationship name="rel_order_detail_product" type="relfk" layers="0"
+	 custom-color="#03f9a3"
+	 src-table="public.order_detail"
+	 dst-table="public.product" reference-fk="product_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<relationship name="rel_order_detail_order" type="relfk" layers="0"
+	 custom-color="#e54fdd"
+	 src-table="public.order_detail"
+	 dst-table="public.&quot;order&quot;" reference-fk="order_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="60.6722" y="-31.753"/>
+	</label>
+</relationship>
+
+<relationship name="rel_shopping_cart_user" type="relfk" layers="0"
+	 src-table="public.shopping_cart"
+	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="6.77911" y="3.74701"/>
+	</label>
+</relationship>
+
+<relationship name="rel_shopping_cart_product" type="relfk" layers="0"
+	 custom-color="#30950a"
+	 src-table="public.shopping_cart"
+	 dst-table="public.product" reference-fk="product_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="53.6897" y="-25.9241"/>
+	</label>
+</relationship>
+
+<relationship name="rel_second_category_category" type="relfk" layers="0"
+	 custom-color="#ae9150"
+	 src-table="public.second_category"
+	 dst-table="public.category" reference-fk="category_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="64.7058" y="-32.253"/>
+	</label>
+</relationship>
+
+<relationship name="rel_third_category_second_category" type="relfk" layers="0"
+	 custom-color="#ed98f1"
+	 src-table="public.third_category"
+	 dst-table="public.second_category" reference-fk="second_category_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="29.2639" y="-19.853"/>
+	</label>
+</relationship>
+
+<relationship name="rel_product_third_category" type="relfk" layers="0"
+	 custom-color="#08faef"
+	 src-table="public.product"
+	 dst-table="public.third_category" reference-fk="third_category_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="-5.72337" y="-17.953"/>
+	</label>
+</relationship>
+
+<relationship name="rel_order_address" type="relfk" layers="0"
+	 src-table="public.&quot;order&quot;"
+	 dst-table="public.address" reference-fk="address_id_shipping_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="37.2658" y="-28.4747"/>
+	</label>
+</relationship>
+
+<relationship name="rel_order_address1" type="relfk" layers="0"
+	 src-table="public.&quot;order&quot;"
+	 dst-table="public.address" reference-fk="address_id_billing_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="-36.2342" y="-30.8608"/>
+	</label>
+</relationship>
+
+<permission>
+	<object name="public" type="schema"/>
+	<roles names="postgres"/>
+	<privileges create="true" usage="true"/>
+</permission>
+<permission>
+	<object name="public" type="schema"/>
+	<privileges create="true" usage="true"/>
+</permission>
+</dbmodel>
