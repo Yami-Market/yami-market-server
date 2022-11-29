@@ -174,10 +174,10 @@ const main = async () => {
   //   'Envelopes'
   // ); //Done
   // await task('Office Supplies Fasteners', 1, 1000, 'Office Supplies', 'Fasteners'); //Done
-  // await task('Office Supplies Labels', 1, 1000, 'Office Supplies', 'Labels');
-  // await task('Office Supplies Paper', 1, 1000, 'Office Supplies', 'Paper');
-  // await task('Office Supplies Storage', 1, 1000, 'Office Supplies', 'Storage');
-  // await task('Office Supplies Supplies', 1, 1000, 'Office Supplies', 'Supplies');
+  // await task('Office Supplies Labels', 1, 1000, 'Office Supplies', 'Labels');  //Done
+  // await task('Office Supplies Paper', 1, 1000, 'Office Supplies', 'Paper');  //Done
+  // await task('Office Supplies Storage', 1, 1000, 'Office Supplies', 'Storage');  //Done
+  // await task('Office Supplies Supplies', 1, 1000, 'Office Supplies', 'Supplies');  //Done
 };
 
 main();

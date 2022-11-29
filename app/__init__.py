@@ -1,6 +1,7 @@
 import logging
 
 from flask import Flask
+from flask_cors import CORS
 from rich.logging import RichHandler
 
 from app.extensions.jwt import jwt
@@ -12,6 +13,7 @@ def create_app(config_class: object = DevelopmentConfig):
     app = Flask(__name__)
     app.config.from_object(config_class)
     jwt.init_app(app)
+    CORS(app)
 
     # Pretty print logs
     if app.config['DEBUG']:
