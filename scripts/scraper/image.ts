@@ -82,6 +82,8 @@ const task = async (
 
     data.map((item: any) => {
       const { raw, full, regular, small, thumb, small_s3 } = item.urls;
+      // py f'{data}'
+      // js `${data}`
       const line = `${raw || '#'},${full || '#'},${regular || '#'},${
         small || '#'
       },${thumb || '#'},${small_s3 || '#'}\n`;
@@ -163,15 +165,15 @@ const main = async () => {
   //   'Office Supplies',
   //   'Appliances'
   // ); // Done
-  // await task('Office Supplies Art', 1, 1000, 'Office Supplies', 'Art');
+  // await task('Office Supplies Art', 1, 1000, 'Office Supplies', 'Art'); //Done
   // await task(
   //   'Office Supplies Envelopes',
-  //   1,
+  // 1,
   //   1000,
   //   'Office Supplies',
   //   'Envelopes'
-  // );
-  // await task('Office Supplies Fasteners', 1, 1000, 'Office Supplies', 'Fasteners');
+  // ); //Done
+  // await task('Office Supplies Fasteners', 1, 1000, 'Office Supplies', 'Fasteners'); //Done
   // await task('Office Supplies Labels', 1, 1000, 'Office Supplies', 'Labels');
   // await task('Office Supplies Paper', 1, 1000, 'Office Supplies', 'Paper');
   // await task('Office Supplies Storage', 1, 1000, 'Office Supplies', 'Storage');
