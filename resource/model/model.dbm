@@ -185,7 +185,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="character varying" length="12"/>
 	</column>
 	<column name="name" not-null="true">
-		<type name="character varying" length="125"/>
+		<type name="character varying" length="250"/>
 	</column>
 	<column name="unit_price" not-null="true" default-value="0.0">
 		<type name="numeric" length="10" precision="2"/>
@@ -301,6 +301,42 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="user_email_key" type="uq-constr" table="public.&quot;user&quot;">
 		<columns names="email" ref-type="src-columns"/>
 	</constraint>
+</table>
+
+<table name="stage" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="2038" y="756"/>
+	<column name="product_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="product_name" not-null="true">
+		<type name="character varying" length="250"/>
+	</column>
+	<column name="category_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="category_name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="second_category_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="second_category_name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="third_category_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="third_category_name" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="unit_price" not-null="true">
+		<type name="numeric" length="10" precision="2"/>
+	</column>
+	<column name="image_url" not-null="true">
+		<type name="text" length="0"/>
+	</column>
 </table>
 
 <constraint name="user_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
