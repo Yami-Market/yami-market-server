@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.0.0-beta1_snapshot20221018" use-changelog="false" last-position="201,0" last-zoom="1" max-obj-count="18"
+<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="18"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -30,7 +30,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="order" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1400" y="60"/>
+	<position x="1408" y="55"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12" precision="0"/>
 	</column>
@@ -63,7 +63,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="address" layers="0" collapse-mode="2" max-obj-count="13" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="640" y="60"/>
+	<position x="634" y="52"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -105,7 +105,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="credit_card" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="820" y="740"/>
+	<position x="823" y="733"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -138,7 +138,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="payment" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1080" y="400"/>
+	<position x="1088" y="404"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -146,7 +146,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="numeric" length="10" precision="2"/>
 	</column>
 	<column name="payment_date" not-null="true">
-		<type name="timestamptz" length="0" precision="3"/>
+		<type name="date" length="0"/>
 	</column>
 	<column name="card_id" not-null="true">
 		<type name="character varying" length="12"/>
@@ -162,7 +162,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="shopping_cart" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="320" y="920"/>
+	<position x="311" y="916"/>
 	<column name="user_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -180,7 +180,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="product" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1060" y="1000"/>
+	<position x="1065" y="998"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -204,7 +204,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="category" layers="0" collapse-mode="2" max-obj-count="2" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1680" y="860"/>
+	<position x="1685" y="868"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -219,7 +219,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="third_category" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1080" y="1280"/>
+	<position x="1078" y="1282"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -237,8 +237,8 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="second_category" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1620" y="1080"/>
-	<column name="id" not-null="true">
+	<position x="1627" y="1089"/>
+	<column name="second_category_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
 	<column name="name" not-null="true">
@@ -248,14 +248,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="character varying" length="12"/>
 	</column>
 	<constraint name="second_category_pkey" type="pk-constr" table="public.second_category">
-		<columns names="id" ref-type="src-columns"/>
+		<columns names="second_category_id" ref-type="src-columns"/>
 	</constraint>
 </table>
 
 <table name="order_detail" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1600" y="520"/>
+	<position x="1599" y="529"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -276,7 +276,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="user" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="340" y="440"/>
+	<position x="348" y="448"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -306,7 +306,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="stage" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="2040" y="760"/>
+	<position x="2038" y="756"/>
 	<column name="product_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -408,7 +408,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <constraint name="second_category_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.second_category" table="public.third_category">
 	<columns names="second_category_id" ref-type="src-columns"/>
-	<columns names="id" ref-type="dst-columns"/>
+	<columns names="second_category_id" ref-type="dst-columns"/>
 </constraint>
 
 <constraint name="category_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
