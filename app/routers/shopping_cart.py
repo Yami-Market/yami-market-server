@@ -8,6 +8,7 @@ from pydantic import ValidationError
 from app.models.shopping_cart_model import ShoppingCartBodyParams
 from app.services.shopping_cart_service import (
     create_user_shopping_cart_product,
+    delete_user_shopping_cart_product,
     get_user_shopping_cart,
     get_user_shopping_cart_product,
     update_user_shopping_cart_product,
@@ -57,11 +58,22 @@ def add_product_to_shopping_cart(product_id: str):
         abort(415)
 
 
-# TODO : Implement delete product from shopping cart
 @bp.delete('/shoppingcart/<string:product_id>')
 @jwt_required()
 def remove_product_from_shopping_cart(product_id: str):
     app.logger.debug(current_user)
     app.logger.debug(product_id)
+    try:
 
-    pass
+        product = get_user_shopping_cart_product(current_user, product_id)
+
+        if product is None:
+
+            return Response(status=204)
+
+        delete_user_shopping_cart_product(current_user, product_id)
+
+        return Response(status=200)
+
+    except ValidationError as e:
+        return jsonify(e.errors()), 400
