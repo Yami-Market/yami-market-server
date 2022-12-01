@@ -39,6 +39,9 @@ def create_app(config_class: object = DevelopmentConfig):
     from app.routers.shopping_cart import bp as shopping_cart_bp
     app.register_blueprint(shopping_cart_bp)
 
+    from app.routers.user_profile import bp as user_profile_bp
+    app.register_blueprint(user_profile_bp)
+
     app.logger.debug(app.url_map)
 
     return app

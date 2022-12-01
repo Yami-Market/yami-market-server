@@ -2,7 +2,7 @@
 name = "yami-market-server"
 version = "0.1.0"
 description = "Yami Shopping Market"
-authors = ["Zhen Jun Xu <me@arlenx.dev>"]
+authors = ["Zhen Jun Xu <me@arlenx.dev>", "Yan Wang <ywang98240@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]

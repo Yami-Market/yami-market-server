@@ -1,4 +1,4 @@
--- Active: 1669775049583@@127.0.0.1@5432@yami-market@public
+-- Active: 1669593277665@@127.0.0.1@5432@yami-market@public
 -- category table
 INSERT INTO category (id, name)
 SELECT DISTINCT category_id, category_name
