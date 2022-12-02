@@ -1,8 +1,7 @@
 from psycopg.rows import class_row
 
+from app.models.category_model import Category, CategoryList
 from db import pool
-
-from ..models.category_model import Category, CategoryList
 
 
 def get_category_list():
