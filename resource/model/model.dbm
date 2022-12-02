@@ -192,7 +192,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="category" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1549" y="779"/>
+	<position x="1552" y="783"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -477,9 +477,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.category" reference-fk="category_id_fkey"
 	 src-required="false" dst-required="false">
 	<line>
-		<position x="1839.01" y="818.975"/>
-	<position x="1839.01" y="746"/>
-	<position x="1720.34" y="746"/>
+		<position x="1842.01" y="822.975"/>
+	<position x="1842.01" y="750"/>
+	<position x="1723.34" y="750"/>
 	</line>
 	<label ref-type="name-label">
 		<position x="66.1983" y="42.3"/>
