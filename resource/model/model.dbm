@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="14"
+<dbmodel pgmodeler-ver="1.0.0-beta1_snapshot20221018" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="14"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -438,16 +438,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</label>
 </relationship>
 
-<relationship name="rel_product_category" type="relfk" layers="0"
-	 custom-color="#08faef"
-	 src-table="public.product"
-	 dst-table="public.category" reference-fk="category_id_fkey"
-	 src-required="false" dst-required="true">
-	<label ref-type="name-label">
-		<position x="-8.38487" y="-24.453"/>
-	</label>
-</relationship>
-
 <relationship name="rel_order_address" type="relfk" layers="0"
 	 src-table="public.&quot;order&quot;"
 	 dst-table="public.address" reference-fk="address_id_shipping_fkey"
@@ -483,6 +473,16 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</line>
 	<label ref-type="name-label">
 		<position x="66.1983" y="42.3"/>
+	</label>
+</relationship>
+
+<relationship name="rel_product_category" type="relfk" layers="0"
+	 custom-color="#e18eb8"
+	 src-table="public.product"
+	 dst-table="public.category" reference-fk="category_id_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
 	</label>
 </relationship>
 
