@@ -63,17 +63,17 @@ def add_product_to_shopping_cart(product_id: str):
 def remove_product_from_shopping_cart(product_id: str):
     app.logger.debug(current_user)
     app.logger.debug(product_id)
-    try:
 
-        product = get_user_shopping_cart_product(current_user, product_id)
+    product = get_user_shopping_cart_product(current_user, product_id)
 
-        if product is None:
+    if product is None:
+        abort(404)  # rasie Not Found Error
 
-            return Response(status=204)
+    delete_user_shopping_cart_product(current_user, product_id)
 
-        delete_user_shopping_cart_product(current_user, product_id)
+    # Response(status=204)
+    # jsonify(message='Delete successfully'), 200  # return message
+    # abort(400)  #(only for 4/5++ http code)rasie error, except error in js,
+    # throw error, catch error
 
-        return Response(status=200)
-
-    except ValidationError as e:
-        return jsonify(e.errors()), 400
+    return Response(status=204)
