@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.0.0-beta1_snapshot20221018" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="14"
+<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="927,490" last-zoom="1" max-obj-count="14"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -69,7 +69,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="address" layers="0" collapse-mode="2" max-obj-count="15" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="612" y="87"/>
+	<position x="620" y="80"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -117,7 +117,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="credit_card" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1042" y="494"/>
+	<position x="1040" y="500"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -150,7 +150,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="shopping_cart" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="421" y="849"/>
+	<position x="420" y="840"/>
 	<column name="user_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -168,7 +168,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="product" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="989" y="874"/>
+	<position x="980" y="880"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -192,7 +192,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="category" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1552" y="783"/>
+	<position x="1560" y="780"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -210,7 +210,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="order_detail" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1522" y="464"/>
+	<position x="1520" y="460"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -234,7 +234,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="user" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="472" y="479"/>
+	<position x="480" y="480"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -264,7 +264,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="stage" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1918" y="118"/>
+	<position x="1920" y="120"/>
 	<column name="product_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -467,9 +467,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.category" reference-fk="category_id_fkey"
 	 src-required="false" dst-required="false">
 	<line>
-		<position x="1842.01" y="822.975"/>
-	<position x="1842.01" y="750"/>
-	<position x="1723.34" y="750"/>
+		<position x="1849.84" y="819.975"/>
+	<position x="1849.84" y="747"/>
+	<position x="1731.23" y="747"/>
 	</line>
 	<label ref-type="name-label">
 		<position x="66.1983" y="42.3"/>
@@ -477,7 +477,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </relationship>
 
 <relationship name="rel_product_category" type="relfk" layers="0"
-	 custom-color="#e18eb8"
+	 custom-color="#7557d5"
 	 src-table="public.product"
 	 dst-table="public.category" reference-fk="category_id_fkey"
 	 src-required="false" dst-required="true">

@@ -1,3 +1,4 @@
+-- Active: 1669593277665@@127.0.0.1@5432@yami-market@public
 -- Category Recursive View
 CREATE OR REPLACE VIEW category_recursive_view
 AS
