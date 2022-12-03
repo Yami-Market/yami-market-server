@@ -40,7 +40,6 @@ def get_user_shopping_cart_product(user: User, product_id: str):
             return data
 
 
-# FIXME: Must validate product_id
 def create_user_shopping_cart_product(
         user: User, product_id: str,
         shopping_cart_params: ShoppingCartBodyParams):
@@ -60,7 +59,6 @@ def create_user_shopping_cart_product(
             conn.commit()
 
 
-# FIXME: Must validate product_id
 def update_user_shopping_cart_product(
         user: User, product_id: str,
         shopping_cart_params: ShoppingCartBodyParams):
@@ -80,7 +78,6 @@ def update_user_shopping_cart_product(
             conn.commit()
 
 
-# FIXME: Must validate product_id
 def delete_user_shopping_cart_product(user: User, product_id: str):
     with pool.connection() as conn:
         with conn.cursor() as cursor:

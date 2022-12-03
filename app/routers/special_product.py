@@ -13,7 +13,7 @@ def get_limited_edition_product():
     app.logger.debug(special_products)
 
     if special_products is None:
-        abort(404, 'No Special Product for now')
+        abort(404, 'No Limited Edition Product for now')
     return jsonify(special_products.dict()), 200
 
 
@@ -23,7 +23,7 @@ def get_best_sellers_product():
     app.logger.debug(special_products)
 
     if special_products is None:
-        abort(404, 'No Special Product for now')
+        abort(404, 'No Best Sellers Product for now')
     return jsonify(special_products.dict()), 200
 
 
@@ -33,5 +33,5 @@ def get_selling_fast_product():
     app.logger.debug(special_products)
 
     if special_products is None:
-        abort(404, 'No Special Product for now')
+        abort(404, 'No Selling Fast Product for now')
     return jsonify(special_products.dict()), 200
