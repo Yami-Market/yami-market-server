@@ -7,65 +7,31 @@ from app.services.special_product_service import get_special_product_random
 bp = Blueprint(name='special_product', import_name=__name__, url_prefix='/v1')
 
 
-@bp.get('/special_product/limited_edition')
+@bp.get('/special/limited')
 def get_limited_edition_product():
     special_products = get_special_product_random()
     app.logger.debug(special_products)
 
     if special_products is None:
         abort(404, 'No Special Product for now')
-    return jsonify(special_products), 200
+    return jsonify(special_products.dict()), 200
 
 
-@bp.get('/special_product/best_sellers')
+@bp.get('/special/best')
 def get_best_sellers_product():
     special_products = get_special_product_random()
     app.logger.debug(special_products)
 
     if special_products is None:
         abort(404, 'No Special Product for now')
-    return jsonify(special_products), 200
+    return jsonify(special_products.dict()), 200
 
 
-@bp.get('/special_product/selling_fast')
+@bp.get('/special/fast')
 def get_selling_fast_product():
     special_products = get_special_product_random()
     app.logger.debug(special_products)
 
     if special_products is None:
         abort(404, 'No Special Product for now')
-    return jsonify(special_products), 200
-
-
-# /v1/p/best
-"""
- [{
-        id,name,....
-    },{
-        id,name,....
-    },{
-        id,name,....
-    }]
-"""
-
-# /v1/p/limited
-"""
- [{
-        id,name,....
-    },{
-        id,name,....
-    },{
-        id,name,....
-    }]
-"""
-
-# /v1/p/fast
-"""
- [{
-        id,name,....
-    },{
-        id,name,....
-    },{
-        id,name,....
-    }]
-"""
+    return jsonify(special_products.dict()), 200
