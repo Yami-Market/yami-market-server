@@ -8,6 +8,7 @@ from pydantic import ValidationError
 from app.models.shopping_cart_model import ShoppingCartBodyParams
 from app.services.shopping_cart_service import (
     create_user_shopping_cart_product,
+    delete_user_shopping_cart_product,
     get_user_shopping_cart,
     get_user_shopping_cart_product,
     update_user_shopping_cart_product,
@@ -33,6 +34,8 @@ def add_product_to_shopping_cart(product_id: str):
         body = request.get_json()
         if body is not None:
             try:
+                # FIXME: Must validate product_id
+
                 shopping_cart_params = ShoppingCartBodyParams(**body)
 
                 product = get_user_shopping_cart_product(
@@ -57,11 +60,22 @@ def add_product_to_shopping_cart(product_id: str):
         abort(415)
 
 
-# TODO : Implement delete product from shopping cart
 @bp.delete('/shoppingcart/<string:product_id>')
 @jwt_required()
 def remove_product_from_shopping_cart(product_id: str):
     app.logger.debug(current_user)
     app.logger.debug(product_id)
 
-    pass
+    product = get_user_shopping_cart_product(current_user, product_id)
+
+    if product is None:
+        abort(404)  # rasie Not Found Error
+
+    delete_user_shopping_cart_product(current_user, product_id)
+
+    # Response(status=204)
+    # jsonify(message='Delete successfully'), 200  # return message
+    # abort(400)  #(only for 4/5++ http code)rasie error, except error in js,
+    # throw error, catch error
+
+    return Response(status=204)

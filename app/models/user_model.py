@@ -1,3 +1,5 @@
+from enum import Enum
+
 from email_validator import EmailNotValidError, validate_email
 from pydantic import BaseModel, validator
 
@@ -14,6 +16,21 @@ class User(BaseModel):
     first_name: str | None
     last_name: str | None
     gender: str | None
+
+
+class UserGender(str, Enum):
+    male = 'male'
+    female = 'female'
+    others = 'others'
+    unknown = 'unknown'
+
+
+class User_Profile(BaseModel):
+    id: str
+    email: str
+    first_name: str | None
+    last_name: str | None
+    gender: UserGender | None
 
 
 class NewUser(BaseModel):

@@ -1,7 +1,7 @@
 from psycopg.rows import class_row
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from app.models.user_model import NewUser, User
+from app.models.user_model import NewUser, User, User_Profile
 from app.utils.id import nano_id
 from db import pool
 
@@ -46,3 +46,20 @@ def create_new_user(new_user: NewUser):
             ))
 
             conn.commit()
+
+
+def get_user_profile(user: User_Profile):
+    with pool.connection() as conn:
+        with conn.cursor(row_factory=class_row(User_Profile)) as cursor:
+            sql = """select id, email, first_name, last_name, gender
+                        from public.user
+                        where id = %s
+                    """
+
+            cursor.execute(sql, (user.id, ))
+
+            # data = cursor.fetchone()
+            # data = User_Profle(**data)
+            user_profile = cursor.fetchone()
+
+            return user_profile

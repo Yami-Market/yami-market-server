@@ -1,6 +1,7 @@
 import logging
 
 from flask import Flask
+from flask_cors import CORS
 from rich.logging import RichHandler
 
 from app.extensions.jwt import jwt
@@ -12,6 +13,7 @@ def create_app(config_class: object = DevelopmentConfig):
     app = Flask(__name__)
     app.config.from_object(config_class)
     jwt.init_app(app)
+    CORS(app)
 
     # Pretty print logs
     if app.config['DEBUG']:
@@ -36,6 +38,18 @@ def create_app(config_class: object = DevelopmentConfig):
 
     from app.routers.shopping_cart import bp as shopping_cart_bp
     app.register_blueprint(shopping_cart_bp)
+
+    from app.routers.user_profile import bp as user_profile_bp
+    app.register_blueprint(user_profile_bp)
+
+    from app.routers.category import bp as category_bp
+    app.register_blueprint(category_bp)
+    
+    from app.routers.product import bp as product_bp
+    app.register_blueprint(product_bp)
+
+    from app.routers.special_product import bp as special_product_bp
+    app.register_blueprint(special_product_bp)
 
     app.logger.debug(app.url_map)
 
