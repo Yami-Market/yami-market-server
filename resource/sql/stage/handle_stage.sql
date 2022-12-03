@@ -19,5 +19,9 @@ FROM stage;
 -- product table
 
 INSERT INTO product (id, name, list_price, image_url, category_id)
-SELECT DISTINCT product_id, product_name, unit_price, image_url, third_category_id
+SELECT DISTINCT product_id,
+                product_name,
+                unit_price,
+                image_url,
+                third_category_id
 FROM stage;
