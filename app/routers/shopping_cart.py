@@ -34,6 +34,8 @@ def add_product_to_shopping_cart(product_id: str):
         body = request.get_json()
         if body is not None:
             try:
+                # FIXME: Must validate product_id
+
                 shopping_cart_params = ShoppingCartBodyParams(**body)
 
                 product = get_user_shopping_cart_product(
