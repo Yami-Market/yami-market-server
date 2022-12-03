@@ -42,6 +42,9 @@ def create_app(config_class: object = DevelopmentConfig):
     from app.routers.user_profile import bp as user_profile_bp
     app.register_blueprint(user_profile_bp)
 
+    from app.routers.category import bp as category_bp
+    app.register_blueprint(category_bp)
+    
     from app.routers.product import bp as product_bp
     app.register_blueprint(product_bp)
 
