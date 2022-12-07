@@ -1,9 +1,10 @@
 from psycopg.rows import class_row
 
 from app.models.shopping_cart_model import (
-    ShoppingCartBodyParams,
     ShoppingCartItem,
     ShoppingCartItemList,
+    ShoppingCartPostBodyParams,
+    ShoppingCartPutBodyParams,
 )
 from app.models.user_model import User
 from db import pool
@@ -42,7 +43,7 @@ def get_user_shopping_cart_product(user: User, product_id: str):
 
 def create_user_shopping_cart_product(
         user: User, product_id: str,
-        shopping_cart_params: ShoppingCartBodyParams):
+        shopping_cart_params: ShoppingCartPutBodyParams):
     with pool.connection() as conn:
         with conn.cursor() as cursor:
             sql = """insert into public.shopping_cart
@@ -59,9 +60,32 @@ def create_user_shopping_cart_product(
             conn.commit()
 
 
+def upsert_user_entire_shopping_cart(
+        user: User, shopping_cart_params: ShoppingCartPostBodyParams):
+    with pool.connection() as conn:
+        with conn.cursor() as cursor:
+            sql = """insert into public.shopping_cart
+                        (user_id, product_id, quantity)
+                        values (%s,%s,%s) on conflict (user_id, product_id)
+                        do update set quantity = excluded.quantity;
+                    """
+            print(((
+                user.id,
+                product.product_id,
+                product.quantity,
+            ) for product in shopping_cart_params.items))
+            cursor.executemany(sql, ((
+                user.id,
+                product.product_id,
+                product.quantity,
+            ) for product in shopping_cart_params.items))
+
+            conn.commit()
+
+
 def update_user_shopping_cart_product(
         user: User, product_id: str,
-        shopping_cart_params: ShoppingCartBodyParams):
+        shopping_cart_params: ShoppingCartPutBodyParams):
     with pool.connection() as conn:
         with conn.cursor() as cursor:
             sql = """update public.shopping_cart

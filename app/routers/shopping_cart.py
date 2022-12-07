@@ -5,13 +5,17 @@ from flask.wrappers import Response
 from flask_jwt_extended import current_user, jwt_required
 from pydantic import ValidationError
 
-from app.models.shopping_cart_model import ShoppingCartBodyParams
+from app.models.shopping_cart_model import (
+    ShoppingCartPostBodyParams,
+    ShoppingCartPutBodyParams,
+)
 from app.services.shopping_cart_service import (
     create_user_shopping_cart_product,
     delete_user_shopping_cart_product,
     get_user_shopping_cart,
     get_user_shopping_cart_product,
     update_user_shopping_cart_product,
+    upsert_user_entire_shopping_cart,
 )
 
 bp = Blueprint(name='shopping_cart', import_name=__name__, url_prefix='/v1')
@@ -27,6 +31,30 @@ def get_shopping_cart():
     return jsonify(user_shopping_cart.dict()), 200
 
 
+@bp.post('/shoppingcart')
+@jwt_required()
+def add_products_shopping_cart():
+    if request.is_json:
+        body = request.get_json()
+        if body is not None:
+            try:
+                shopping_cart_params = ShoppingCartPostBodyParams(**body)
+
+                app.logger.debug(shopping_cart_params)
+
+                upsert_user_entire_shopping_cart(current_user,
+                                                 shopping_cart_params)
+
+                return Response(status=204)
+
+            except ValidationError as e:
+                return jsonify(e.errors()), 400
+        else:
+            abort(400)
+    else:
+        abort(415)
+
+
 @bp.put('/shoppingcart/<string:product_id>')
 @jwt_required()
 def add_product_to_shopping_cart(product_id: str):
@@ -36,7 +64,7 @@ def add_product_to_shopping_cart(product_id: str):
             try:
                 # FIXME: Must validate product_id
 
-                shopping_cart_params = ShoppingCartBodyParams(**body)
+                shopping_cart_params = ShoppingCartPutBodyParams(**body)
 
                 product = get_user_shopping_cart_product(
                     current_user, product_id)

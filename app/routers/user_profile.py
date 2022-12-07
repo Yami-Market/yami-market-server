@@ -16,7 +16,7 @@ bp = Blueprint(name='user_profile', import_name=__name__, url_prefix='/v1')
 @bp.get('/profile')
 @jwt_required()
 def get_profile():
-    app.logger.debug(current_user)
+    # app.logger.debug(current_user)
 
     current_user_profile = get_user_profile(current_user)
 
@@ -24,10 +24,10 @@ def get_profile():
         app.logger.debug(current_user_profile)
 
         # json.loads(current_user_profile)
-        app.logger.debug(current_user_profile.dict())
+        # app.logger.debug(current_user_profile.dict())
 
         # json.dumps(current_user_profile)
-        app.logger.debug(current_user_profile.json())
+        # app.logger.debug(current_user_profile.json())
 
         return jsonify(current_user_profile.dict()), 200
     else:

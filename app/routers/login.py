@@ -1,5 +1,5 @@
 from flask import Blueprint, abort, jsonify, request
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, set_access_cookies
 from pydantic import ValidationError
 
 from app.models.user_model import UserBodyParams
@@ -25,8 +25,11 @@ def login():
                     return abort(401,
                                  ClientErrorMessage.wrong_email_or_password)
 
+                response = jsonify({'msg': 'login successful'})
                 access_token = create_access_token(identity=user_params)
-                return jsonify(access_token=access_token)
+                set_access_cookies(response, access_token)
+                return response
+                # return jsonify(access_token=access_token)
 
             except ValidationError as e:
                 return jsonify(e.errors()), 400
