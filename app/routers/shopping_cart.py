@@ -12,8 +12,8 @@ from app.models.shopping_cart_model import (
 from app.services.shopping_cart_service import (
     create_user_shopping_cart_product,
     delete_user_shopping_cart_product,
-    get_user_shopping_cart,
     get_user_shopping_cart_product,
+    get_user_shopping_cart_product_detail_list,
     update_user_shopping_cart_product,
     upsert_user_entire_shopping_cart,
 )
@@ -24,16 +24,17 @@ bp = Blueprint(name='shopping_cart', import_name=__name__, url_prefix='/v1')
 @bp.get('/shoppingcart')
 @jwt_required()
 def get_shopping_cart():
-    app.logger.debug(current_user)
+    # app.logger.debug(current_user)
     # app.logger.debug(get_jwt_identity())
     # app.logger.debug(get_current_user())
-    user_shopping_cart = get_user_shopping_cart(current_user)
+    user_shopping_cart = get_user_shopping_cart_product_detail_list(
+        current_user)
     return jsonify(user_shopping_cart.dict()), 200
 
 
 @bp.post('/shoppingcart')
 @jwt_required()
-def add_products_shopping_cart():
+def add_entire_products_to_shopping_cart():
     if request.is_json:
         body = request.get_json()
         if body is not None:
@@ -103,7 +104,7 @@ def remove_product_from_shopping_cart(product_id: str):
 
     # Response(status=204)
     # jsonify(message='Delete successfully'), 200  # return message
-    # abort(400)  #(only for 4/5++ http code)rasie error, except error in js,
+    # abort(400)  #(only for 4/5++ http code) raise error, except error in js,
     # throw error, catch error
 
     return Response(status=204)

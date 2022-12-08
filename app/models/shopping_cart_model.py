@@ -26,6 +26,18 @@ class ShoppingCartPutBodyParams(BaseModel):
         'quantity', allow_reuse=True)(quantity_can_not_less_than_one)
 
 
+class ShoppingCartProductDetailItem(BaseModel):
+    product_id: str
+    name: str
+    quantity: int
+    list_price: float
+    image_url: str
+
+
+class ShoppingCartProductDetailItemList(BaseModel):
+    items: list[ShoppingCartProductDetailItem]
+
+
 class ShoppingCartItem(BaseModel):
     user_id: str
     product_id: str

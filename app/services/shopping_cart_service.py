@@ -2,18 +2,22 @@ from psycopg.rows import class_row
 
 from app.models.shopping_cart_model import (
     ShoppingCartItem,
-    ShoppingCartItemList,
     ShoppingCartPostBodyParams,
+    ShoppingCartProductDetailItem,
+    ShoppingCartProductDetailItemList,
     ShoppingCartPutBodyParams,
 )
 from app.models.user_model import User
 from db import pool
 
 
-def get_user_shopping_cart(user: User):
+def get_user_shopping_cart_product_detail_list(user: User):
     with pool.connection() as conn:
-        with conn.cursor(row_factory=class_row(ShoppingCartItem)) as cursor:
-            sql = """select * from public.shopping_cart
+        with conn.cursor(row_factory=class_row(
+                ShoppingCartProductDetailItem)) as cursor:
+            sql = """select product_id, name, quantity, list_price, image_url
+                        from public.shopping_cart sc
+                        inner join public.product p on sc.product_id = p.id
                         where user_id = %s
                     """
 
@@ -21,7 +25,7 @@ def get_user_shopping_cart(user: User):
 
             shopping_cart = cursor.fetchall()
 
-            return ShoppingCartItemList(items=shopping_cart)
+            return ShoppingCartProductDetailItemList(items=shopping_cart)
 
 
 def get_user_shopping_cart_product(user: User, product_id: str):
