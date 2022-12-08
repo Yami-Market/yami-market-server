@@ -23,7 +23,7 @@ if DATABASE_URL is None:
 
 pool = ConnectionPool(
     DATABASE_URL
-    or 'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}',
+    or f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}',
     min_size=1,
     max_size=20,
 )
