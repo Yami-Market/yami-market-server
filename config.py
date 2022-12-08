@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+JWT_COOKIE_DOMAIN = os.getenv('JWT_COOKIE_DOMAIN')
+
 
 class Config(object):
     FLASK_SECRET_KEY = os.getenv('FLASK_SECRET_KEY', 'secret')
@@ -28,3 +30,5 @@ class ProductionConfig(Config):
     # over https. In production, this should always be set to True
     JWT_COOKIE_SECURE = True
     JWT_TOKEN_LOCATION = ['cookies']
+    JWT_COOKIE_DOMAIN = JWT_COOKIE_DOMAIN
+    JWT_COOKIE_SAMESITE = 'None'
