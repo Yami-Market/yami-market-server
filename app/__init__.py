@@ -1,4 +1,5 @@
 import logging
+import os
 from datetime import datetime, timedelta, timezone
 
 from flask import Flask
@@ -15,15 +16,19 @@ from app.extensions.jwt import jwt
 from app.utils.logger import remove_color_filter
 from config import DevelopmentConfig
 
+ACCESS_ORIGINS = os.getenv('ACCESS_ORIGINS')
+
 
 def create_app(config_class: object = DevelopmentConfig):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
     CORS(app,
-         resources={r'/*': {
-             'origins': 'http://localhost:3000'
-         }},
+         resources={
+             r'/*': {
+                 'origins': ACCESS_ORIGINS or 'http://localhost:3000'
+             }
+         },
          supports_credentials=True)
 
     jwt.init_app(app)
