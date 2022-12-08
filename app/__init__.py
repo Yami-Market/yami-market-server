@@ -82,6 +82,12 @@ def create_app(config_class: object = DevelopmentConfig):
     from app.routers.special_product import bp as special_product_bp
     app.register_blueprint(special_product_bp)
 
+    from app.routers.address import bp as address_bp
+    app.register_blueprint(address_bp)
+
+    from app.routers.credit_card import bp as credit_card_bp
+    app.register_blueprint(credit_card_bp)
+
     app.logger.debug(app.url_map)
 
     return app

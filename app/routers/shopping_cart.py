@@ -74,7 +74,7 @@ def add_product_to_shopping_cart(product_id: str):
                     create_user_shopping_cart_product(current_user, product_id,
                                                       shopping_cart_params)
 
-                    return Response(status=201)
+                    return Response(status=204)
 
                 update_user_shopping_cart_product(current_user, product_id,
                                                   shopping_cart_params)

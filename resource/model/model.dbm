@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="927,490" last-zoom="1" max-obj-count="14"
+<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="353,4" last-zoom="1.35" max-obj-count="13"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -66,47 +66,50 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="address" layers="0" collapse-mode="2" max-obj-count="15" z-value="0">
+<table name="address" layers="0" collapse-mode="2" max-obj-count="16" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="620" y="80"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
-	<column name="first_name">
+	<column name="first_name" not-null="true">
 		<type name="character varying" length="50"/>
 	</column>
-	<column name="last_name">
+	<column name="last_name" not-null="true">
 		<type name="character varying" length="50"/>
 	</column>
-	<column name="street_address">
+	<column name="street_address" not-null="true">
 		<type name="character varying" length="125"/>
 	</column>
 	<column name="optional_address">
 		<type name="character varying" length="50"/>
 	</column>
-	<column name="city">
+	<column name="city" not-null="true">
 		<type name="character varying" length="25"/>
 	</column>
-	<column name="state">
+	<column name="state" not-null="true">
 		<type name="character varying" length="25"/>
 	</column>
-	<column name="country">
+	<column name="country" not-null="true">
 		<type name="character varying" length="30"/>
 	</column>
-	<column name="zip_code">
+	<column name="zip_code" not-null="true">
 		<type name="character varying" length="20"/>
 	</column>
-	<column name="phone_number">
+	<column name="phone_number" not-null="true">
 		<type name="character varying" length="15"/>
+	</column>
+	<column name="email" not-null="true">
+		<type name="character varying" length="50"/>
 	</column>
 	<column name="user_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
-	<column name="create_at" not-null="true" default-value="now()">
+	<column name="created_at" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0" precision="3"/>
 	</column>
-	<column name="upadte_at" not-null="true" default-value="now()">
+	<column name="upadted_at" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0" precision="3"/>
 	</column>
 	<constraint name="address_pkey" type="pk-constr" table="public.address">
@@ -114,7 +117,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="credit_card" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
+<table name="credit_card" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="1040" y="500"/>
@@ -137,10 +140,16 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="integer" length="0"/>
 	</column>
 	<column name="cvv_code" not-null="true">
-		<type name="character varying" length="3" precision="0"/>
+		<type name="character varying" length="4" precision="0"/>
 	</column>
 	<column name="user_id" not-null="true">
 		<type name="character varying" length="12"/>
+	</column>
+	<column name="created_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0" precision="3"/>
+	</column>
+	<column name="updated_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0" precision="3"/>
 	</column>
 	<constraint name="credit_card_pkey" type="pk-constr" table="public.credit_card">
 		<columns names="id" ref-type="src-columns"/>
@@ -459,7 +468,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <relationship name="rel_order_credit_card" type="relfk" layers="0"
 	 src-table="public.&quot;order&quot;"
 	 dst-table="public.credit_card" reference-fk="credit_card_id_fkey"
-	 src-required="false" dst-required="true"/>
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="63.0184" y="13.2766"/>
+	</label>
+</relationship>
 
 <relationship name="rel_category_category" type="relfk" layers="0"
 	 custom-color="#f3328d"
@@ -467,22 +480,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.category" reference-fk="category_id_fkey"
 	 src-required="false" dst-required="false">
 	<line>
-		<position x="1849.84" y="819.975"/>
-	<position x="1849.84" y="747"/>
-	<position x="1731.23" y="747"/>
+		<position x="1850.01" y="819.975"/>
+	<position x="1850.01" y="747"/>
+	<position x="1731.34" y="747"/>
 	</line>
 	<label ref-type="name-label">
 		<position x="66.1983" y="42.3"/>
-	</label>
-</relationship>
-
-<relationship name="rel_product_category" type="relfk" layers="0"
-	 custom-color="#7557d5"
-	 src-table="public.product"
-	 dst-table="public.category" reference-fk="category_id_fkey"
-	 src-required="false" dst-required="true">
-	<label ref-type="name-label">
-		<position x="0" y="0"/>
 	</label>
 </relationship>
 
