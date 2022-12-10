@@ -45,3 +45,18 @@ class AddressBodyParams(BaseModel):
     zip_code: str
     phone_number: str
     email: str
+
+
+class BillingAddressBody(BaseModel):
+    id: str | None
+    user_id: str | None
+    first_name: str
+    last_name: str
+    street_address: str
+    optional_address: str | None
+    city: str
+    state: str
+    country: str
+    zip_code: str
+    phone_number: str
+    email: str

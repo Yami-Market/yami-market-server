@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="353,4" last-zoom="1.35" max-obj-count="13"
+<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="551,54" last-zoom="1.35" max-obj-count="13"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -27,7 +27,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<enumeration label="unknown"/>
 </usertype>
 
-<table name="order" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
+<table name="order" layers="0" collapse-mode="2" max-obj-count="10" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="1400" y="60"/>
@@ -56,9 +56,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="character varying" length="12"/>
 	</column>
 	<column name="shipping_address_id" not-null="true">
-		<type name="character varying" length="12"/>
-	</column>
-	<column name="billing_address_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
 	<constraint name="order_pkey" type="pk-constr" table="public.&quot;order&quot;">
@@ -109,7 +106,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="created_at" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0" precision="3"/>
 	</column>
-	<column name="upadted_at" not-null="true" default-value="now()">
+	<column name="updated_at" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0" precision="3"/>
 	</column>
 	<constraint name="address_pkey" type="pk-constr" table="public.address">
@@ -117,7 +114,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="credit_card" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
+<table name="credit_card" layers="0" collapse-mode="2" max-obj-count="13" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="1040" y="500"/>
@@ -128,21 +125,24 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="character varying" length="25"/>
 	</column>
 	<column name="card_number" not-null="true">
-		<type name="integer" length="0"/>
+		<type name="character varying" length="20"/>
 	</column>
 	<column name="card_holder_name" not-null="true">
 		<type name="character varying" length="50"/>
 	</column>
 	<column name="card_expiry_month" not-null="true">
-		<type name="integer" length="0"/>
+		<type name="character varying" length="2"/>
 	</column>
 	<column name="card_expiry_year" not-null="true">
-		<type name="integer" length="0"/>
+		<type name="character varying" length="2"/>
 	</column>
 	<column name="cvv_code" not-null="true">
 		<type name="character varying" length="4" precision="0"/>
 	</column>
 	<column name="user_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="billing_address_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
 	<column name="created_at" not-null="true" default-value="now()">
@@ -153,6 +153,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<constraint name="credit_card_pkey" type="pk-constr" table="public.credit_card">
 		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="billing_address_id_key" type="uq-constr" table="public.credit_card">
+		<columns names="billing_address_id" ref-type="src-columns"/>
 	</constraint>
 </table>
 
@@ -318,12 +321,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
-<constraint name="address_id_billing_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.address" table="public.&quot;order&quot;">
-	<columns names="billing_address_id" ref-type="src-columns"/>
-	<columns names="id" ref-type="dst-columns"/>
-</constraint>
-
 <constraint name="credit_card_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.credit_card" table="public.&quot;order&quot;">
 	<columns names="credit_card_id" ref-type="src-columns"/>
@@ -339,6 +336,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <constraint name="user_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.credit_card">
 	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="address_id_billing_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.address" table="public.credit_card">
+	<columns names="billing_address_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
@@ -456,15 +459,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</label>
 </relationship>
 
-<relationship name="rel_order_address1" type="relfk" layers="0"
-	 src-table="public.&quot;order&quot;"
-	 dst-table="public.address" reference-fk="address_id_billing_fkey"
-	 src-required="false" dst-required="true">
-	<label ref-type="name-label">
-		<position x="-36.2342" y="-30.8608"/>
-	</label>
-</relationship>
-
 <relationship name="rel_order_credit_card" type="relfk" layers="0"
 	 src-table="public.&quot;order&quot;"
 	 dst-table="public.credit_card" reference-fk="credit_card_id_fkey"
@@ -486,6 +480,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</line>
 	<label ref-type="name-label">
 		<position x="66.1983" y="42.3"/>
+	</label>
+</relationship>
+
+<relationship name="rel_credit_card_address" type="relfk" layers="0"
+	 src-table="public.credit_card"
+	 dst-table="public.address" reference-fk="address_id_billing_fkey"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="3.82042" y="-15.2456"/>
 	</label>
 </relationship>
 

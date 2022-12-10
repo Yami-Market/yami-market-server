@@ -59,7 +59,7 @@ def get_user_profile(user: User_Profile):
             cursor.execute(sql, (user.id, ))
 
             # data = cursor.fetchone()
-            # data = User_Profle(**data)
+            # data = User_Profile(**data)
             user_profile = cursor.fetchone()
 
             return user_profile

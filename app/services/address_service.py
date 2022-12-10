@@ -22,7 +22,7 @@ def get_address_list(user: User):
 
 def create_new_address(user: User, address: AddressBodyParams):
     with pool.connection() as conn:
-        with conn.cursor() as cursor:
+        with conn.cursor(row_factory=class_row(Address)) as cursor:
             address_id = nano_id()
 
             sql = """insert into public.address
@@ -50,6 +50,8 @@ def create_new_address(user: User, address: AddressBodyParams):
 
             conn.commit()
 
+            return cursor.fetchone()
+
 
 def update_address(user: User, address_id: str, address: AddressBodyParams):
     with pool.connection() as conn:
@@ -59,7 +61,7 @@ def update_address(user: User, address_id: str, address: AddressBodyParams):
                             street_address = %s,
                             optional_address = %s, city = %s, state = %s,
                             country = %s, zip_code = %s, phone_number = %s,
-                            email = %s
+                            email = %s, updated_at = now()
                         where id = %s and user_id = %s
                     """
 
