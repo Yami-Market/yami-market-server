@@ -7,6 +7,7 @@ class ClientErrorMessage(str, Enum):
 
     wrong_email_or_password = 'Wrong Email or Password'
     email_already_exists = 'Email already exists'
+    wrong_password = 'Wrong Password'
 
 
 class ServerErrorMessage(str, Enum):

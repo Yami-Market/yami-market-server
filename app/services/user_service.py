@@ -1,12 +1,7 @@
 from psycopg.rows import class_row
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from app.models.user_model import (
-    NewUser,
-    Update_User_Profile,
-    User,
-    User_Profile,
-)
+from app.models.user_model import NewUser, User, UserProfile
 from app.utils.id import nano_id
 from db import pool
 
@@ -53,9 +48,9 @@ def create_new_user(new_user: NewUser):
             conn.commit()
 
 
-def get_user_profile(user: User_Profile):
+def get_user_profile(user: UserProfile):
     with pool.connection() as conn:
-        with conn.cursor(row_factory=class_row(User_Profile)) as cursor:
+        with conn.cursor(row_factory=class_row(UserProfile)) as cursor:
             sql = """select id, email, first_name, last_name, gender
                         from public.user
                         where id = %s
@@ -70,9 +65,9 @@ def get_user_profile(user: User_Profile):
             return user_profile
 
 
-def get_user_password(id: str):
+def get_user_by_id(id: str):
     with pool.connection() as conn:
-        with conn.cursor(row_factory=class_row(Update_User_Profile)) as cursor:
+        with conn.cursor(row_factory=class_row(User)) as cursor:
             sql = """select * from public.user
                         where id = %s
                     """
@@ -84,10 +79,10 @@ def get_user_password(id: str):
             return user_profile
 
 
-def update_user_password(user: Update_User_Profile):
+def update_user_password(user: User, new_password):
     with pool.connection() as conn:
         with conn.cursor() as cursor:
-            hashed_password = hash_password(user.new_password)  # type:ignore
+            hashed_password = hash_password(new_password)  # type:ignore
             sql = """update public.user
                     set password = %s
                         where id = %s

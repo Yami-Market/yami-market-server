@@ -25,7 +25,7 @@ class UserGender(str, Enum):
     unknown = 'unknown'
 
 
-class User_Profile(BaseModel):
+class UserProfile(BaseModel):
     id: str
     email: str
     first_name: str | None
@@ -33,14 +33,15 @@ class User_Profile(BaseModel):
     gender: UserGender | None
 
 
-class Update_User_Profile(BaseModel):
-    id: str
-    email: str
-    current_password: str | None
-    new_password: str | None
+class UpdateUserProfile(BaseModel):
     first_name: str | None
     last_name: str | None
-    gender: str | None
+    gender: UserGender | None
+
+
+class UserResetPassword(BaseModel):
+    current_password: str
+    new_password: str
 
     @validator('new_password')
     def password_must_be_valid(cls, v: str):
