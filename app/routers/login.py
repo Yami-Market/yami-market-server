@@ -25,7 +25,14 @@ def login():
                     return abort(401,
                                  ClientErrorMessage.wrong_email_or_password)
 
-                response = jsonify({'msg': 'login successful'})
+                response = jsonify(message='login successful',
+                                   user={
+                                       'id': exist_user.id,
+                                       'email': exist_user.email,
+                                       'first_name': exist_user.first_name,
+                                       'last_name': exist_user.last_name,
+                                       'gender': exist_user.gender
+                                   })
                 access_token = create_access_token(identity=user_params)
                 set_access_cookies(response, access_token)
                 return response

@@ -18,9 +18,9 @@ from app.services.address_service import (
 bp = Blueprint(name='address', import_name=__name__, url_prefix='/v1')
 
 
-@bp.get('/address')
+@bp.get('/shippingaddress')
 @jwt_required()
-def get_address():
+def get_shipping_address():
     user_address_list = get_address_list(current_user)
 
     return jsonify(json.loads(user_address_list.json())), 200

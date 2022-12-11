@@ -15,7 +15,8 @@ def get_user_shopping_cart_product_detail_list(user: User):
     with pool.connection() as conn:
         with conn.cursor(row_factory=class_row(
                 ShoppingCartProductDetailItem)) as cursor:
-            sql = """select product_id, name, quantity, list_price, image_url
+            sql = """select product_id, name, quantity, list_price,
+                        image_url, category_id
                         from public.shopping_cart sc
                         inner join public.product p on sc.product_id = p.id
                         where user_id = %s
@@ -73,11 +74,13 @@ def upsert_user_entire_shopping_cart(
                         values (%s,%s,%s) on conflict (user_id, product_id)
                         do update set quantity = excluded.quantity;
                     """
+
             print(((
                 user.id,
                 product.product_id,
                 product.quantity,
             ) for product in shopping_cart_params.items))
+
             cursor.executemany(sql, ((
                 user.id,
                 product.product_id,

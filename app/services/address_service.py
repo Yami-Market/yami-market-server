@@ -6,30 +6,37 @@ from app.utils.id import nano_id
 from db import pool
 
 
-def get_address_list(user: User):
+def get_address_list(user: User, address_type='shipping'):
     with pool.connection() as conn:
         with conn.cursor(row_factory=class_row(Address)) as cursor:
             sql = """select * from public.address
-                        where user_id = %s
+                        where user_id = %s and type = %s
+                        and deleted = false
                     """
 
-            cursor.execute(sql, (user.id, ))
+            cursor.execute(sql, (
+                user.id,
+                address_type,
+            ))
 
             addresses = cursor.fetchall()
 
             return AddressList(items=addresses)
 
 
-def create_new_address(user: User, address: AddressBodyParams):
+def create_new_address(user: User,
+                       address: AddressBodyParams,
+                       address_type='shipping'):
     with pool.connection() as conn:
-        with conn.cursor() as cursor:
+        with conn.cursor(row_factory=class_row(Address)) as cursor:
             address_id = nano_id()
 
             sql = """insert into public.address
                         (id, user_id, first_name, last_name, street_address,
                          optional_address, city, state, country, zip_code,
-                         phone_number, email)
-                        values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                         phone_number, email, type)
+                        values (%s, %s, %s, %s, %s, %s, %s, %s,
+                                    %s, %s, %s, %s, %s)
                         returning *
                     """
 
@@ -46,9 +53,12 @@ def create_new_address(user: User, address: AddressBodyParams):
                 address.zip_code,
                 address.phone_number,
                 address.email,
+                address_type,
             ))
 
             conn.commit()
+
+            return cursor.fetchone()
 
 
 def update_address(user: User, address_id: str, address: AddressBodyParams):
@@ -59,7 +69,7 @@ def update_address(user: User, address_id: str, address: AddressBodyParams):
                             street_address = %s,
                             optional_address = %s, city = %s, state = %s,
                             country = %s, zip_code = %s, phone_number = %s,
-                            email = %s
+                            email = %s, updated_at = now()
                         where id = %s and user_id = %s
                     """
 
@@ -84,7 +94,8 @@ def update_address(user: User, address_id: str, address: AddressBodyParams):
 def delete_address(user: User, address_id: str):
     with pool.connection() as conn:
         with conn.cursor() as cursor:
-            sql = """delete from public.address
+            sql = """update public.address
+                        set deleted = true, updated_at = now()
                         where id = %s and user_id = %s
                     """
 

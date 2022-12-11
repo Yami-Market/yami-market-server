@@ -63,7 +63,6 @@ def add_product_to_shopping_cart(product_id: str):
         body = request.get_json()
         if body is not None:
             try:
-                # FIXME: Must validate product_id
 
                 shopping_cart_params = ShoppingCartPutBodyParams(**body)
 
@@ -71,6 +70,7 @@ def add_product_to_shopping_cart(product_id: str):
                     current_user, product_id)
 
                 if product is None:
+                    # FIXME: Must validate product_id
                     create_user_shopping_cart_product(current_user, product_id,
                                                       shopping_cart_params)
 
