@@ -59,6 +59,25 @@ def create_user_shopping_cart_product(
             conn.commit()
 
 
+def create_user_shopping_cart_product_with_quantity(user: User,
+                                                    product_id: str,
+                                                    quantity: int):
+    with pool.connection() as conn:
+        with conn.cursor() as cursor:
+            sql = """insert into public.shopping_cart
+                        (user_id, product_id, quantity)
+                        values (%s,%s,%s);
+                    """
+
+            cursor.execute(sql, (
+                user.id,
+                product_id,
+                quantity,
+            ))
+
+            conn.commit()
+
+
 def update_user_shopping_cart_product(
         user: User, product_id: str,
         shopping_cart_params: ShoppingCartBodyParams):

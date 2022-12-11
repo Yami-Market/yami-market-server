@@ -44,12 +44,15 @@ def create_app(config_class: object = DevelopmentConfig):
 
     from app.routers.category import bp as category_bp
     app.register_blueprint(category_bp)
-    
+
     from app.routers.product import bp as product_bp
     app.register_blueprint(product_bp)
 
     from app.routers.special_product import bp as special_product_bp
     app.register_blueprint(special_product_bp)
+
+    from app.routers.save_for_later import bp as save_later_bp
+    app.register_blueprint(save_later_bp)
 
     app.logger.debug(app.url_map)
 
