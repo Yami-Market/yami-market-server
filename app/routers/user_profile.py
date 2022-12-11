@@ -11,6 +11,7 @@ from app.services.user_service import (
     get_user_by_id,
     get_user_profile,
     update_user_password,
+    update_user_profile,
 )
 from app.utils.response_message import ClientErrorMessage
 
@@ -40,14 +41,20 @@ def get_profile():
 
 @bp.post('/profile')
 @jwt_required()
-def post_user_profile():
+def post_profile():
     if request.is_json:
         body = request.get_json()
         if body is not None:
             try:
-                new_user = UpdateUserProfile(**body)
-
-                app.logger.debug(new_user)
+                new_profile = UpdateUserProfile(**body)
+                app.logger.debug(new_profile)
+                user = get_user_by_id(current_user.id)
+                app.logger.debug(current_user)
+                if user is not None:
+                    update_user_profile(new_profile, user.id)
+                    return Response(status=204)
+                else:
+                    abort(404)
 
             except ValidationError as e:
                 return jsonify(e.errors()), 400

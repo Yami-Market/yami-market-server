@@ -9,20 +9,20 @@ class UserBodyParams(BaseModel):
     password: str
 
 
+class UserGender(str, Enum):
+    male = 'male'
+    female = 'female'
+    others = 'others'
+    unknown = 'unknown'
+
+
 class User(BaseModel):
     id: str
     email: str
     password: str
     first_name: str | None
     last_name: str | None
-    gender: str | None
-
-
-class UserGender(str, Enum):
-    male = 'male'
-    female = 'female'
-    others = 'others'
-    unknown = 'unknown'
+    gender: UserGender | None
 
 
 class UserProfile(BaseModel):
