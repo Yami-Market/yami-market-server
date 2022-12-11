@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="237,182" last-zoom="1.35" max-obj-count="14"
+<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="6,294" last-zoom="0.8" max-obj-count="16"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -159,7 +159,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="shopping_cart" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="540" y="780"/>
+	<position x="540" y="760"/>
 	<column name="user_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -306,6 +306,21 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 </table>
 
+<table name="save_later" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="120" y="920"/>
+	<column name="user_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="product_id" not-null="true">
+		<type name="character varying" length="25"/>
+	</column>
+	<constraint name="save_later_pkey" type="pk-constr" table="public.save_later">
+		<columns names="product_id,user_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
 <constraint name="user_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.&quot;order&quot;">
 	<columns names="user_id" ref-type="src-columns"/>
@@ -375,6 +390,18 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <constraint name="order_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;order&quot;" table="public.order_detail">
 	<columns names="order_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="user_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.save_later">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="product_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.product" table="public.save_later">
+	<columns names="product_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
@@ -482,6 +509,16 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <relationship name="rel_credit_card_user" type="relfk" layers="0"
 	 src-table="public.credit_card"
 	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_shopping_cart_cp_user" type="relfk" layers="0"
+	 src-table="public.save_later"
+	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_shopping_cart_cp_product" type="relfk" layers="0"
+	 src-table="public.save_later"
+	 dst-table="public.product" reference-fk="product_id_fkey"
 	 src-required="false" dst-required="true"/>
 
 <relationship name="rel_product_category" type="relfk" layers="0"
