@@ -1,7 +1,7 @@
 from psycopg.rows import class_row
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from app.models.user_model import NewUser, User, UserProfile
+from app.models.user_model import NewUser, UpdateUserProfile, User, UserProfile
 from app.utils.id import nano_id
 from db import pool
 
@@ -96,18 +96,19 @@ def update_user_password(user: User, new_password):
             conn.commit()
 
 
-# def update_user_profile(user: Update_User_Profile):
-#     with pool.connection() as conn:
-#        with conn.cursor(row_factory=class_row(Update_User_Profile)) as cursor:
-#             sql = """select id, email, first_name, last_name, gender
-#                         from public.user
-#                         where id = %s
-#                     """
+def update_user_profile(user: UpdateUserProfile, id: str):
+    with pool.connection() as conn:
+        with conn.cursor() as cursor:
+            sql = """update public.user
+                    set first_name = %s, last_name = %s, gender = %s
+                    where id = %s
+                    """
 
-#             cursor.execute(sql, (user.id, ))
+            cursor.execute(sql, (
+                user.first_name,
+                user.last_name,
+                user.gender,
+                id,
+            ))
 
-#             # data = cursor.fetchone()
-#             # data = User_Profle(**data)
-#             user_profile = cursor.fetchone()
-
-#             return user_profile
+            conn.commit()
