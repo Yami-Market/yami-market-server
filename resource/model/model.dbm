@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="431,0" last-zoom="1.35" max-obj-count="14"
+<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="237,182" last-zoom="1.35" max-obj-count="14"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -21,7 +21,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="order" layers="0" collapse-mode="2" max-obj-count="10" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1374.81" y="52.5926"/>
+	<position x="1380" y="60"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12" precision="0"/>
 	</column>
@@ -57,7 +57,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="address" layers="0" collapse-mode="2" max-obj-count="19" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="442.222" y="27.4074"/>
+	<position x="440" y="20"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -91,7 +91,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="email" not-null="true">
 		<type name="character varying" length="50"/>
 	</column>
-	<column name="type" not-null="true" default-value="shipping">
+	<column name="type" not-null="true" default-value="'shipping'">
 		<type name="character varying" length="10"/>
 	</column>
 	<column name="deleted" not-null="true" default-value="FALSE">
@@ -114,7 +114,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="credit_card" layers="0" collapse-mode="2" max-obj-count="14" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1032.59" y="460"/>
+	<position x="1040" y="460"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -159,7 +159,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="shopping_cart" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="534.074" y="778.519"/>
+	<position x="540" y="780"/>
 	<column name="user_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -177,7 +177,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="product" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1118.52" y="823.704"/>
+	<position x="1120" y="820"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -243,7 +243,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="user" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="504.444" y="456.296"/>
+	<position x="500" y="460"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -273,7 +273,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="stage" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1790.37" y="208.889"/>
+	<position x="1800" y="200"/>
 	<column name="product_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -461,9 +461,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.category" reference-fk="category_id_fkey"
 	 src-required="false" dst-required="false">
 	<line>
-		<position x="1850.01" y="819.975"/>
-	<position x="1850.01" y="747"/>
-	<position x="1731.34" y="747"/>
+		<position x="1849.84" y="819.975"/>
+	<position x="1849.84" y="747"/>
+	<position x="1731.23" y="747"/>
 	</line>
 	<label ref-type="name-label">
 		<position x="66.1983" y="42.3"/>
