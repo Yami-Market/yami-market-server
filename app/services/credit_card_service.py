@@ -14,7 +14,7 @@ def get_credit_card_list(user: User):
     with pool.connection() as conn:
         with conn.cursor(row_factory=class_row(CreditCard)) as cursor:
             sql = """select * from public.credit_card
-                        where user_id = %s
+                        where user_id = %s and deleted = false
                     """
 
             cursor.execute(sql, (user.id, ))
@@ -35,7 +35,6 @@ def create_credit_card(user: User, billing_address_id: str,
                          card_number, card_holder_name, card_expiry_month,
                          card_expiry_year, cvv_code)
                         values (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                        returning *
                     """
 
             cursor.execute(sql, (
@@ -52,4 +51,18 @@ def create_credit_card(user: User, billing_address_id: str,
 
             conn.commit()
 
-            return cursor.fetchone()
+
+def delete_credit_card(user: User, credit_card_id: str):
+    with pool.connection() as conn:
+        with conn.cursor() as cursor:
+            sql = """update public.credit_card
+                        set deleted = true, updated_at = now()
+                        where id = %s and user_id = %s
+                    """
+
+            cursor.execute(sql, (
+                credit_card_id,
+                user.id,
+            ))
+
+            conn.commit()

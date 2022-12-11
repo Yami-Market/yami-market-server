@@ -11,3 +11,8 @@ class Product(BaseModel):
 
 class ProductList(BaseModel):
     items: list[Product]
+
+
+class ProductPagination(BaseModel):
+    total: int
+    products: list[Product]

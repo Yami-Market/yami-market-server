@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
-from app.models.address_model import BillingAddressBody
+from app.models.address_model import Address, BillingAddressBody
 
 
 class NewCreditCardBody(BaseModel):
@@ -22,6 +22,7 @@ class CreditCardBodyParams(BaseModel):
 class CreditCard(BaseModel):
     id: str
     user_id: str
+    billing_address_id: str
     card_type: str
     card_number: str
     card_holder_name: str
@@ -30,6 +31,24 @@ class CreditCard(BaseModel):
     cvv_code: str
     created_at: datetime
     updated_at: datetime
+
+    class Config:
+        json_encoders = {
+            datetime: lambda v: v.timestamp(),
+        }
+
+
+class CreditCardWithBillingAddress(CreditCard):
+    billing_address: Address
+
+    class Config:
+        json_encoders = {
+            datetime: lambda v: v.timestamp(),
+        }
+
+
+class CreditCardWithBillingAddressList(BaseModel):
+    items: list[CreditCardWithBillingAddress]
 
     class Config:
         json_encoders = {

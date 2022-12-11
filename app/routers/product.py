@@ -2,6 +2,7 @@ from flask import Blueprint, abort
 from flask import current_app as app
 from flask import jsonify
 
+from app.services.category_service import get_product_all_category
 from app.services.product_service import get_product_by_id
 from app.services.special_product_service import get_special_product_random
 
@@ -22,5 +23,11 @@ def get_product(product_id):
     random_product = get_special_product_random(6)
     random_image_urls = [p.image_url for p in random_product.items]
 
+    categories = get_product_all_category(product.category_id)
+
+    if categories is None:
+        abort(404, f'categories of product {product_id} can not be found')
+
     return jsonify(product_detail=product.dict(),
+                   categories=categories.dict(),
                    image_urls=random_image_urls), 200

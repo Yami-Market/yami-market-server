@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="644,20" last-zoom="1.35" max-obj-count="14"
+<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="431,0" last-zoom="1.35" max-obj-count="14"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -17,15 +17,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <schema name="public" layers="0" fill-color="#e1e1e1" sql-disabled="true">
 </schema>
-
-<usertype name="user_gender" configuration="enumeration">
-	<schema name="public"/>
-	<role name="postgres"/>
-	<enumeration label="male"/>
-	<enumeration label="female"/>
-	<enumeration label="others"/>
-	<enumeration label="unknown"/>
-</usertype>
 
 <table name="order" layers="0" collapse-mode="2" max-obj-count="10" z-value="0">
 	<schema name="public"/>
@@ -63,10 +54,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="address" layers="0" collapse-mode="2" max-obj-count="18" z-value="0">
+<table name="address" layers="0" collapse-mode="2" max-obj-count="19" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="570.37" y="63.7037"/>
+	<position x="442.222" y="27.4074"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -99,6 +90,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<column name="email" not-null="true">
 		<type name="character varying" length="50"/>
+	</column>
+	<column name="type" not-null="true" default-value="shipping">
+		<type name="character varying" length="10"/>
 	</column>
 	<column name="deleted" not-null="true" default-value="FALSE">
 		<type name="boolean" length="0"/>
@@ -145,7 +139,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="deleted" not-null="true" default-value="FALSE">
 		<type name="boolean" length="0"/>
 	</column>
-	<column name="user_id">
+	<column name="user_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
 	<column name="billing_address_id" not-null="true">
@@ -266,7 +260,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="character varying" length="50"/>
 	</column>
 	<column name="gender">
-		<type name="public.user_gender" length="0"/>
+		<type name="character varying" length="10"/>
 	</column>
 	<constraint name="user_pkey" type="pk-constr" table="public.&quot;user&quot;">
 		<columns names="id" ref-type="src-columns"/>
@@ -488,7 +482,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <relationship name="rel_credit_card_user" type="relfk" layers="0"
 	 src-table="public.credit_card"
 	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
-	 src-required="false" dst-required="false"/>
+	 src-required="false" dst-required="true"/>
 
 <relationship name="rel_product_category" type="relfk" layers="0"
 	 src-table="public.product"

@@ -48,8 +48,6 @@ class AddressBodyParams(BaseModel):
 
 
 class BillingAddressBody(BaseModel):
-    id: str | None
-    user_id: str | None
     first_name: str
     last_name: str
     street_address: str
