@@ -73,6 +73,9 @@ def edit_product_to_save_later(product_id: str):
 
     elif product_shopping_cart is None and product_save_later is not None:
 
+        # body = ShoppingCartPutBodyParams(quantity=1)
+        # create_user_shopping_cart_product(current_user, product_id, body)
+
         create_user_shopping_cart_product_with_quantity(
             current_user, product_id, 1)
         delete_user_save_later_product(current_user, product_id)
