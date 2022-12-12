@@ -24,6 +24,23 @@ def get_credit_card_list(user: User):
             return CreditCardList(items=credit_cards)
 
 
+def get_credit_card(user: User, credit_card_id: str):
+    with pool.connection() as conn:
+        with conn.cursor(row_factory=class_row(CreditCard)) as cursor:
+            sql = """select * from public.credit_card
+                        where user_id = %s and id = %s and deleted = false
+                    """
+
+            cursor.execute(sql, (
+                user.id,
+                credit_card_id,
+            ))
+
+            credit_card = cursor.fetchone()
+
+            return credit_card
+
+
 def create_credit_card(user: User, billing_address_id: str,
                        credit_card: NewCreditCardBody):
     with pool.connection() as conn:

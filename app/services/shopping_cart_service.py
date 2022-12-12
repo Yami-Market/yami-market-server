@@ -75,12 +75,6 @@ def upsert_user_entire_shopping_cart(
                         do update set quantity = excluded.quantity;
                     """
 
-            print(((
-                user.id,
-                product.product_id,
-                product.quantity,
-            ) for product in shopping_cart_params.items))
-
             cursor.executemany(sql, ((
                 user.id,
                 product.product_id,
