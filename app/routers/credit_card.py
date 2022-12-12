@@ -1,3 +1,4 @@
+import json
 from typing import cast
 
 from flask import Blueprint, abort
@@ -32,8 +33,8 @@ def get_credit_card():
         for address in user_address_list.items:
             if credit_card.billing_address_id == address.id:
                 credit_card_with_billing_address_list.append({
-                    **credit_card.dict(), 'billing_address': {
-                        **address.dict()
+                    **json.loads((credit_card.json())), 'billing_address': {
+                        **json.loads((address.json()))
                     }
                 })
                 break

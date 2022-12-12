@@ -14,6 +14,8 @@
 # else
 # abort 404
 # '''
+import json
+
 from flask import Blueprint, abort
 from flask import current_app as app
 from flask import jsonify
@@ -40,7 +42,7 @@ bp = Blueprint(name='save_later', import_name=__name__, url_prefix='/v1')
 def get_save_later():
     app.logger.debug(current_user)
     user_save_later = get_user_save_later(current_user)
-    return jsonify(user_save_later.dict()), 200
+    return jsonify(json.loads(user_save_later.json())), 200
 
 
 @bp.delete('/savelater/<string:product_id>')
@@ -52,7 +54,7 @@ def remove_product_from_save_later(product_id: str):
     product = get_user_save_later_product(current_user, product_id)
 
     if product is None:
-        abort(404)  # rasie Not Found Error
+        abort(404)  # raise Not Found Error
 
     delete_user_save_later_product(current_user, product_id)
     return Response(status=204)
