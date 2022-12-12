@@ -56,8 +56,8 @@ def get_all_products_by_category_id(category_id):
 
     app.logger.debug(level_3_ids)
 
-    all_products = get_all_product_by_category_list(level_3_ids, 10,
-                                                    10 * (page - 1))
+    all_products = get_all_product_by_category_list(level_3_ids, 24,
+                                                    24 * (page - 1))
 
     app.logger.debug(all_products)
 
