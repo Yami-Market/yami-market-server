@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="172,0" last-zoom="1.1" max-obj-count="16"
+<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="0,0" last-zoom="1.1" max-obj-count="16"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -28,10 +28,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="order_date" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0" precision="3"/>
 	</column>
-	<column name="ship_date">
+	<column name="payment_date" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0" precision="3"/>
 	</column>
-	<column name="payment_date">
+	<column name="ship_date">
 		<type name="timestamptz" length="0" precision="3"/>
 	</column>
 	<column name="shipping_fee" not-null="true">
@@ -177,7 +177,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="product" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1120" y="820"/>
+	<position x="1018.18" y="846.364"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -216,11 +216,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="order_detail" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+<table name="order_detail" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="1520" y="460"/>
-	<column name="id" not-null="true">
+	<column name="order_id" not-null="true">
+		<type name="character varying" length="12" precision="0"/>
+	</column>
+	<column name="product_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
 	<column name="unit_price" not-null="true">
@@ -229,14 +232,8 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="order_quantity" not-null="true" default-value="0">
 		<type name="integer" length="0"/>
 	</column>
-	<column name="product_id" not-null="true">
-		<type name="character varying" length="25"/>
-	</column>
-	<column name="order_id" not-null="true">
-		<type name="character varying" length="12" precision="0"/>
-	</column>
 	<constraint name="order_detail_pkey" type="pk-constr" table="public.order_detail">
-		<columns names="id" ref-type="src-columns"/>
+		<columns names="order_id,product_id" ref-type="src-columns"/>
 	</constraint>
 </table>
 
@@ -315,6 +312,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<column name="product_id" not-null="true">
 		<type name="character varying" length="25"/>
+	</column>
+	<column name="created_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0" precision="3"/>
 	</column>
 	<constraint name="save_later_pkey" type="pk-constr" table="public.save_later">
 		<columns names="product_id,user_id" ref-type="src-columns"/>
@@ -465,6 +465,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </relationship>
 
 <relationship name="rel_order_address" type="relfk" layers="0"
+	 custom-color="#0038d2"
 	 src-table="public.&quot;order&quot;"
 	 dst-table="public.address" reference-fk="address_id_shipping_fkey"
 	 src-required="false" dst-required="true">
@@ -474,11 +475,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </relationship>
 
 <relationship name="rel_order_credit_card" type="relfk" layers="0"
+	 custom-color="#82f0cf"
 	 src-table="public.&quot;order&quot;"
 	 dst-table="public.credit_card" reference-fk="credit_card_id_fkey"
 	 src-required="false" dst-required="true">
 	<label ref-type="name-label">
-		<position x="63.0184" y="13.2766"/>
+		<position x="6.3169" y="-34.4803"/>
 	</label>
 </relationship>
 
@@ -498,33 +500,54 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </relationship>
 
 <relationship name="rel_credit_card_address" type="relfk" layers="0"
+	 custom-color="#c20631"
 	 src-table="public.credit_card"
 	 dst-table="public.address" reference-fk="address_id_billing_fkey"
 	 src-required="false" dst-required="true">
 	<label ref-type="name-label">
-		<position x="147.077" y="-103.573"/>
+		<position x="-36.5639" y="-57.981"/>
 	</label>
 </relationship>
 
 <relationship name="rel_credit_card_user" type="relfk" layers="0"
+	 custom-color="#9dc65f"
 	 src-table="public.credit_card"
 	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
-	 src-required="false" dst-required="true"/>
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="2.18675" y="-32.5602"/>
+	</label>
+</relationship>
 
 <relationship name="rel_shopping_cart_cp_user" type="relfk" layers="0"
+	 custom-color="#932fb0"
 	 src-table="public.save_later"
 	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
-	 src-required="false" dst-required="true"/>
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="-32.4701" y="-3.3439"/>
+	</label>
+</relationship>
 
 <relationship name="rel_shopping_cart_cp_product" type="relfk" layers="0"
+	 custom-color="#8b8955"
 	 src-table="public.save_later"
 	 dst-table="public.product" reference-fk="product_id_fkey"
-	 src-required="false" dst-required="true"/>
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
 
 <relationship name="rel_product_category" type="relfk" layers="0"
+	 custom-color="#7f5042"
 	 src-table="public.product"
 	 dst-table="public.category" reference-fk="category_id_fkey"
-	 src-required="false" dst-required="true"/>
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="-6.68971" y="-31.0841"/>
+	</label>
+</relationship>
 
 <permission>
 	<object name="public" type="schema"/>

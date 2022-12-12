@@ -1,3 +1,4 @@
+import json
 from typing import cast
 
 from flask import Blueprint, abort
@@ -9,10 +10,15 @@ from pydantic import ValidationError
 
 from app.models.address_model import AddressBodyParams
 from app.models.credit_card_model import CreditCardBodyParams
-from app.services.address_service import create_new_address, get_address_list
+from app.services.address_service import (
+    create_new_address,
+    delete_address,
+    get_address_list,
+)
 from app.services.credit_card_service import (
     create_credit_card,
     delete_credit_card,
+    get_credit_card,
     get_credit_card_list,
 )
 
@@ -21,7 +27,7 @@ bp = Blueprint(name='credit_card', import_name=__name__, url_prefix='/v1')
 
 @bp.get('/creditcard')
 @jwt_required()
-def get_credit_card():
+def get_user_credit_card():
 
     user_credit_card_list = get_credit_card_list(current_user)
     user_address_list = get_address_list(current_user, 'billing')
@@ -32,8 +38,8 @@ def get_credit_card():
         for address in user_address_list.items:
             if credit_card.billing_address_id == address.id:
                 credit_card_with_billing_address_list.append({
-                    **credit_card.dict(), 'billing_address': {
-                        **address.dict()
+                    **json.loads((credit_card.json())), 'billing_address': {
+                        **json.loads((address.json()))
                     }
                 })
                 break
@@ -108,6 +114,11 @@ def update_user_credit_card(credit_card_id: str):
 @bp.delete('/creditcard/<string:credit_card_id>')
 @jwt_required()
 def delete_user_credit_card(credit_card_id: str):
+    credit_card = get_credit_card(current_user, credit_card_id)
+
+    if credit_card is not None:
+        delete_address(current_user, credit_card.billing_address_id)
+
     delete_credit_card(current_user, credit_card_id)
 
     return Response(status=204)

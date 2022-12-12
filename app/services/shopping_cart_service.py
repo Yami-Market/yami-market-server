@@ -75,12 +75,6 @@ def upsert_user_entire_shopping_cart(
                         do update set quantity = excluded.quantity;
                     """
 
-            print(((
-                user.id,
-                product.product_id,
-                product.quantity,
-            ) for product in shopping_cart_params.items))
-
             cursor.executemany(sql, ((
                 user.id,
                 product.product_id,
@@ -88,6 +82,23 @@ def upsert_user_entire_shopping_cart(
             ) for product in shopping_cart_params.items))
 
             conn.commit()
+
+
+def create_user_shopping_cart_product_with_quantity(user: User,
+                                                    product_id: str,
+                                                    quantity: int):
+    with pool.connection() as conn:
+        with conn.cursor() as cursor:
+            sql = """insert into public.shopping_cart
+                        (user_id, product_id, quantity)
+                        values (%s,%s,%s);
+                    """
+
+            cursor.execute(sql, (
+                user.id,
+                product_id,
+                quantity,
+            ))
 
 
 def update_user_shopping_cart_product(
@@ -120,5 +131,17 @@ def delete_user_shopping_cart_product(user: User, product_id: str):
                 product_id,
                 user.id,
             ))
+
+            conn.commit()
+
+
+def clear_shopping_cart(user: User):
+    with pool.connection() as conn:
+        with conn.cursor() as cursor:
+            sql = """delete from public.shopping_cart
+                        where user_id = %s;
+                    """
+
+            cursor.execute(sql, (user.id, ))
 
             conn.commit()

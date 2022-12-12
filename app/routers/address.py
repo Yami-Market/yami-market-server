@@ -12,7 +12,6 @@ from app.services.address_service import (
     create_new_address,
     delete_address,
     get_address_list,
-    update_address,
 )
 
 bp = Blueprint(name='address', import_name=__name__, url_prefix='/v1')
@@ -60,7 +59,9 @@ def update_user_address(address_id):
 
                 app.logger.debug(address_params)
 
-                update_address(current_user, address_id, address_params)
+                create_new_address(current_user, address_params)
+
+                delete_address(current_user, address_id)
 
                 return Response(status=204)
 

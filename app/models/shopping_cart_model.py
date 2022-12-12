@@ -32,6 +32,7 @@ class ShoppingCartProductDetailItem(BaseModel):
     quantity: int
     list_price: float
     image_url: str
+    category_id: str
 
 
 class ShoppingCartProductDetailItemList(BaseModel):

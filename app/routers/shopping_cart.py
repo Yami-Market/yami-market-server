@@ -10,6 +10,7 @@ from app.models.shopping_cart_model import (
     ShoppingCartPutBodyParams,
 )
 from app.services.shopping_cart_service import (
+    clear_shopping_cart,
     create_user_shopping_cart_product,
     delete_user_shopping_cart_product,
     get_user_shopping_cart_product,
@@ -30,6 +31,14 @@ def get_shopping_cart():
     user_shopping_cart = get_user_shopping_cart_product_detail_list(
         current_user)
     return jsonify(user_shopping_cart.dict()), 200
+
+
+@bp.get('/shoppingcart/clear')
+@jwt_required()
+def clear_user_shopping_cart():
+    clear_shopping_cart(current_user)
+
+    return Response(status=204)
 
 
 @bp.post('/shoppingcart')
