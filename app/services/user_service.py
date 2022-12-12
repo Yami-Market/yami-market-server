@@ -1,7 +1,7 @@
 from psycopg.rows import class_row
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from app.models.user_model import NewUser, User, User_Profile
+from app.models.user_model import NewUser, UpdateUserProfile, User, UserProfile
 from app.utils.id import nano_id
 from db import pool
 
@@ -48,9 +48,9 @@ def create_new_user(new_user: NewUser):
             conn.commit()
 
 
-def get_user_profile(user: User_Profile):
+def get_user_profile(user: UserProfile):
     with pool.connection() as conn:
-        with conn.cursor(row_factory=class_row(User_Profile)) as cursor:
+        with conn.cursor(row_factory=class_row(UserProfile)) as cursor:
             sql = """select id, email, first_name, last_name, gender
                         from public.user
                         where id = %s
@@ -59,7 +59,56 @@ def get_user_profile(user: User_Profile):
             cursor.execute(sql, (user.id, ))
 
             # data = cursor.fetchone()
-            # data = User_Profle(**data)
+            # data = User_Profile(**data)
             user_profile = cursor.fetchone()
 
             return user_profile
+
+
+def get_user_by_id(id: str):
+    with pool.connection() as conn:
+        with conn.cursor(row_factory=class_row(User)) as cursor:
+            sql = """select * from public.user
+                        where id = %s
+                    """
+
+            cursor.execute(sql, (id, ))
+
+            user_profile = cursor.fetchone()
+
+            return user_profile
+
+
+def update_user_password(user: User, new_password):
+    with pool.connection() as conn:
+        with conn.cursor() as cursor:
+            hashed_password = hash_password(new_password)  # type:ignore
+            sql = """update public.user
+                    set password = %s
+                        where id = %s
+                    """
+
+            cursor.execute(sql, (
+                hashed_password,
+                user.id,
+            ))
+
+            conn.commit()
+
+
+def update_user_profile(user: UpdateUserProfile, id: str):
+    with pool.connection() as conn:
+        with conn.cursor() as cursor:
+            sql = """update public.user
+                    set first_name = %s, last_name = %s, gender = %s
+                    where id = %s
+                    """
+
+            cursor.execute(sql, (
+                user.first_name,
+                user.last_name,
+                user.gender,
+                id,
+            ))
+
+            conn.commit()

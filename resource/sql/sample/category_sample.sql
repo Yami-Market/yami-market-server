@@ -36,11 +36,16 @@ WITH RECURSIVE category_tree AS
                     SELECT c.id, c.name, c.parent_id, ct.level + 1
                     FROM category c
                              JOIN category_tree ct ON c.parent_id = ct.id)
-SELECT *
+SELECT ct.id        AS id,
+       ct.name      AS name,
+       ct.parent_id AS parent_id,
+       c.name       AS parent_name,
+       c2.id        AS grandparent_id,
+       c2.name      AS grandparent_name,
+       level
 FROM category_tree ct
-         INNER JOIN category c ON ct.parent_id = c.id
-         INNER JOIN category c2 ON c.parent_id = c2.id
-WHERE ct.level = 3;
+         LEFT JOIN category c ON ct.parent_id = c.id
+         LEFT JOIN category c2 ON c.parent_id = c2.id;
 
 -- Sample 4
 WITH RECURSIVE category_tree AS
@@ -51,10 +56,12 @@ WITH RECURSIVE category_tree AS
                     SELECT c.id, c.name, c.parent_id, ct.level + 1
                     FROM category c
                              JOIN category_tree ct ON c.parent_id = ct.id)
-SELECT ct.id   AS category_3_id,
-       c2.name AS category_1,
-       c.name  AS category_3,
-       ct.name AS category_3
+SELECT c2.id   AS level_1_id,
+       c2.name AS level_1_name,
+       c.id    AS level_2_id,
+       c.name  AS level_2_name,
+       ct.id   AS level_3_id,
+       ct.name AS level_3_name
 FROM category_tree ct
          INNER JOIN category c ON ct.parent_id = c.id
          INNER JOIN category c2 ON c.parent_id = c2.id

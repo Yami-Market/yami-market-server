@@ -9,15 +9,6 @@ class UserBodyParams(BaseModel):
     password: str
 
 
-class User(BaseModel):
-    id: str
-    email: str
-    password: str
-    first_name: str | None
-    last_name: str | None
-    gender: str | None
-
-
 class UserGender(str, Enum):
     male = 'male'
     female = 'female'
@@ -25,12 +16,42 @@ class UserGender(str, Enum):
     unknown = 'unknown'
 
 
-class User_Profile(BaseModel):
+class User(BaseModel):
+    id: str
+    email: str
+    password: str
+    first_name: str | None
+    last_name: str | None
+    gender: UserGender | None
+
+
+class UserProfile(BaseModel):
     id: str
     email: str
     first_name: str | None
     last_name: str | None
     gender: UserGender | None
+
+
+class UpdateUserProfile(BaseModel):
+    first_name: str | None
+    last_name: str | None
+    gender: UserGender | None
+
+
+class UserResetPassword(BaseModel):
+    current_password: str
+    new_password: str
+
+    @validator('new_password')
+    def password_must_be_valid(cls, v: str):
+        strip_v = v.strip()
+        if len(strip_v) < 8:
+            raise ValueError('Password must be more than 8 characters')
+        elif len(strip_v) > 20:
+            raise ValueError('Password must be less than 20 characters')
+
+        return strip_v
 
 
 class NewUser(BaseModel):

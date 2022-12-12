@@ -1,8 +1,11 @@
 import os
+from datetime import timedelta
 
 from dotenv import load_dotenv
 
 load_dotenv()
+
+JWT_COOKIE_DOMAIN = os.getenv('JWT_COOKIE_DOMAIN')
 
 
 class Config(object):
@@ -12,12 +15,20 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    JWT_ACCESS_TOKEN_EXPIRES = False
+    CORS_HEADERS = 'Content-Type'
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=2)
+    JWT_COOKIE_SECURE = False
+    JWT_TOKEN_LOCATION = ['cookies']
 
 
 class ProductionConfig(Config):
     DEBUG = False
+    CORS_HEADERS = 'Content-Type'
     # Dangerous to set to False in production!
-    JWT_ACCESS_TOKEN_EXPIRES = False
-    # from datetime import timedelta
-    # JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
+    # If true this will only allow the cookies that contain your JWTs to be sent
+    # over https. In production, this should always be set to True
+    JWT_COOKIE_SECURE = True
+    JWT_TOKEN_LOCATION = ['cookies']
+    JWT_COOKIE_DOMAIN = JWT_COOKIE_DOMAIN
+    JWT_COOKIE_SAMESITE = 'None'

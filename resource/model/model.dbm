@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="927,490" last-zoom="1" max-obj-count="14"
+<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="6,294" last-zoom="0.8" max-obj-count="16"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -18,19 +18,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <schema name="public" layers="0" fill-color="#e1e1e1" sql-disabled="true">
 </schema>
 
-<usertype name="user_gender" configuration="enumeration">
+<table name="order" layers="0" collapse-mode="2" max-obj-count="10" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<enumeration label="male"/>
-	<enumeration label="female"/>
-	<enumeration label="others"/>
-	<enumeration label="unknown"/>
-</usertype>
-
-<table name="order" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
-	<schema name="public"/>
-	<role name="postgres"/>
-	<position x="1400" y="60"/>
+	<position x="1380" y="60"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12" precision="0"/>
 	</column>
@@ -58,55 +49,61 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="shipping_address_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
-	<column name="billing_address_id" not-null="true">
-		<type name="character varying" length="12"/>
-	</column>
 	<constraint name="order_pkey" type="pk-constr" table="public.&quot;order&quot;">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 </table>
 
-<table name="address" layers="0" collapse-mode="2" max-obj-count="15" z-value="0">
+<table name="address" layers="0" collapse-mode="2" max-obj-count="19" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="620" y="80"/>
+	<position x="440" y="20"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
-	<column name="first_name">
+	<column name="first_name" not-null="true">
 		<type name="character varying" length="50"/>
 	</column>
-	<column name="last_name">
+	<column name="last_name" not-null="true">
 		<type name="character varying" length="50"/>
 	</column>
-	<column name="street_address">
+	<column name="street_address" not-null="true">
 		<type name="character varying" length="125"/>
 	</column>
 	<column name="optional_address">
 		<type name="character varying" length="50"/>
 	</column>
-	<column name="city">
+	<column name="city" not-null="true">
 		<type name="character varying" length="25"/>
 	</column>
-	<column name="state">
+	<column name="state" not-null="true">
 		<type name="character varying" length="25"/>
 	</column>
-	<column name="country">
+	<column name="country" not-null="true">
 		<type name="character varying" length="30"/>
 	</column>
-	<column name="zip_code">
+	<column name="zip_code" not-null="true">
 		<type name="character varying" length="20"/>
 	</column>
-	<column name="phone_number">
+	<column name="phone_number" not-null="true">
 		<type name="character varying" length="15"/>
 	</column>
-	<column name="user_id" not-null="true">
+	<column name="email" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="type" not-null="true" default-value="'shipping'">
+		<type name="character varying" length="10"/>
+	</column>
+	<column name="deleted" not-null="true" default-value="FALSE">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="user_id">
 		<type name="character varying" length="12"/>
 	</column>
-	<column name="create_at" not-null="true" default-value="now()">
+	<column name="created_at" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0" precision="3"/>
 	</column>
-	<column name="upadte_at" not-null="true" default-value="now()">
+	<column name="updated_at" not-null="true" default-value="now()">
 		<type name="timestamptz" length="0" precision="3"/>
 	</column>
 	<constraint name="address_pkey" type="pk-constr" table="public.address">
@@ -114,10 +111,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="credit_card" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
+<table name="credit_card" layers="0" collapse-mode="2" max-obj-count="14" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1040" y="500"/>
+	<position x="1040" y="460"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -125,22 +122,34 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="character varying" length="25"/>
 	</column>
 	<column name="card_number" not-null="true">
-		<type name="integer" length="0"/>
+		<type name="character varying" length="20"/>
 	</column>
 	<column name="card_holder_name" not-null="true">
 		<type name="character varying" length="50"/>
 	</column>
 	<column name="card_expiry_month" not-null="true">
-		<type name="integer" length="0"/>
+		<type name="character varying" length="2"/>
 	</column>
 	<column name="card_expiry_year" not-null="true">
-		<type name="integer" length="0"/>
+		<type name="character varying" length="2"/>
 	</column>
 	<column name="cvv_code" not-null="true">
-		<type name="character varying" length="3" precision="0"/>
+		<type name="character varying" length="4" precision="0"/>
+	</column>
+	<column name="deleted" not-null="true" default-value="FALSE">
+		<type name="boolean" length="0"/>
 	</column>
 	<column name="user_id" not-null="true">
 		<type name="character varying" length="12"/>
+	</column>
+	<column name="billing_address_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="created_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0" precision="3"/>
+	</column>
+	<column name="updated_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0" precision="3"/>
 	</column>
 	<constraint name="credit_card_pkey" type="pk-constr" table="public.credit_card">
 		<columns names="id" ref-type="src-columns"/>
@@ -150,7 +159,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="shopping_cart" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="420" y="840"/>
+	<position x="540" y="760"/>
 	<column name="user_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -168,7 +177,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="product" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="980" y="880"/>
+	<position x="1120" y="820"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -234,7 +243,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="user" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="480" y="480"/>
+	<position x="500" y="460"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -251,7 +260,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="character varying" length="50"/>
 	</column>
 	<column name="gender">
-		<type name="public.user_gender" length="0"/>
+		<type name="character varying" length="10"/>
 	</column>
 	<constraint name="user_pkey" type="pk-constr" table="public.&quot;user&quot;">
 		<columns names="id" ref-type="src-columns"/>
@@ -264,7 +273,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="stage" layers="0" collapse-mode="2" max-obj-count="12" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1920" y="120"/>
+	<position x="1800" y="200"/>
 	<column name="product_id" not-null="true">
 		<type name="character varying" length="12"/>
 	</column>
@@ -297,6 +306,21 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 </table>
 
+<table name="save_later" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="120" y="920"/>
+	<column name="user_id" not-null="true">
+		<type name="character varying" length="12"/>
+	</column>
+	<column name="product_id" not-null="true">
+		<type name="character varying" length="25"/>
+	</column>
+	<constraint name="save_later_pkey" type="pk-constr" table="public.save_later">
+		<columns names="product_id,user_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
 <constraint name="user_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.&quot;order&quot;">
 	<columns names="user_id" ref-type="src-columns"/>
@@ -309,12 +333,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
-<constraint name="address_id_billing_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.address" table="public.&quot;order&quot;">
-	<columns names="billing_address_id" ref-type="src-columns"/>
-	<columns names="id" ref-type="dst-columns"/>
-</constraint>
-
 <constraint name="credit_card_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.credit_card" table="public.&quot;order&quot;">
 	<columns names="credit_card_id" ref-type="src-columns"/>
@@ -324,6 +342,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <constraint name="user_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.address">
 	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="address_id_billing_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.address" table="public.credit_card">
+	<columns names="billing_address_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
@@ -369,6 +393,18 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
+<constraint name="user_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;user&quot;" table="public.save_later">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="product_id_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.product" table="public.save_later">
+	<columns names="product_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
 <relationship name="rel_order_user" type="relfk" layers="0"
 	 custom-color="#474ea6"
 	 src-table="public.&quot;order&quot;"
@@ -383,19 +419,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 custom-color="#424dff"
 	 src-table="public.address"
 	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
-	 src-required="false" dst-required="true">
+	 src-required="false" dst-required="false">
 	<label ref-type="name-label">
-		<position x="0" y="0"/>
-	</label>
-</relationship>
-
-<relationship name="rel_credit_card_user" type="relfk" layers="0"
-	 custom-color="#ba0d17"
-	 src-table="public.credit_card"
-	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
-	 src-required="false" dst-required="true">
-	<label ref-type="name-label">
-		<position x="7.80522" y="-71.4537"/>
+		<position x="-17.4101" y="-33.2826"/>
 	</label>
 </relationship>
 
@@ -443,23 +469,18 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.address" reference-fk="address_id_shipping_fkey"
 	 src-required="false" dst-required="true">
 	<label ref-type="name-label">
-		<position x="37.2658" y="-28.4747"/>
-	</label>
-</relationship>
-
-<relationship name="rel_order_address1" type="relfk" layers="0"
-	 src-table="public.&quot;order&quot;"
-	 dst-table="public.address" reference-fk="address_id_billing_fkey"
-	 src-required="false" dst-required="true">
-	<label ref-type="name-label">
-		<position x="-36.2342" y="-30.8608"/>
+		<position x="-34.9646" y="-21.6213"/>
 	</label>
 </relationship>
 
 <relationship name="rel_order_credit_card" type="relfk" layers="0"
 	 src-table="public.&quot;order&quot;"
 	 dst-table="public.credit_card" reference-fk="credit_card_id_fkey"
-	 src-required="false" dst-required="true"/>
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="63.0184" y="13.2766"/>
+	</label>
+</relationship>
 
 <relationship name="rel_category_category" type="relfk" layers="0"
 	 custom-color="#f3328d"
@@ -476,15 +497,34 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</label>
 </relationship>
 
-<relationship name="rel_product_category" type="relfk" layers="0"
-	 custom-color="#7557d5"
-	 src-table="public.product"
-	 dst-table="public.category" reference-fk="category_id_fkey"
+<relationship name="rel_credit_card_address" type="relfk" layers="0"
+	 src-table="public.credit_card"
+	 dst-table="public.address" reference-fk="address_id_billing_fkey"
 	 src-required="false" dst-required="true">
 	<label ref-type="name-label">
-		<position x="0" y="0"/>
+		<position x="147.077" y="-103.573"/>
 	</label>
 </relationship>
+
+<relationship name="rel_credit_card_user" type="relfk" layers="0"
+	 src-table="public.credit_card"
+	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_shopping_cart_cp_user" type="relfk" layers="0"
+	 src-table="public.save_later"
+	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_shopping_cart_cp_product" type="relfk" layers="0"
+	 src-table="public.save_later"
+	 dst-table="public.product" reference-fk="product_id_fkey"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_product_category" type="relfk" layers="0"
+	 src-table="public.product"
+	 dst-table="public.category" reference-fk="category_id_fkey"
+	 src-required="false" dst-required="true"/>
 
 <permission>
 	<object name="public" type="schema"/>
