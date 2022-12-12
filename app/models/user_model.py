@@ -13,7 +13,6 @@ class UserGender(str, Enum):
     male = 'male'
     female = 'female'
     others = 'others'
-    unknown = 'unknown'
 
 
 class User(BaseModel):
