@@ -84,6 +84,9 @@ def create_app(config_class: object = DevelopmentConfig):
     from app.routers.special_product import bp as special_product_bp
     app.register_blueprint(special_product_bp)
 
+    from app.routers.save_for_later import bp as save_later_bp
+    app.register_blueprint(save_later_bp)
+
     from app.routers.address import bp as address_bp
     app.register_blueprint(address_bp)
 

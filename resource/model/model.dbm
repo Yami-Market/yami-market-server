@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="172,0" last-zoom="1.1" max-obj-count="16"
+<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="73,61" last-zoom="1.1" max-obj-count="16"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -316,6 +316,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="product_id" not-null="true">
 		<type name="character varying" length="25"/>
 	</column>
+	<column name="created_at" not-null="true" default-value="now()">
+		<type name="timestamptz" length="0" precision="3"/>
+	</column>
 	<constraint name="save_later_pkey" type="pk-constr" table="public.save_later">
 		<columns names="product_id,user_id" ref-type="src-columns"/>
 	</constraint>
@@ -514,7 +517,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <relationship name="rel_shopping_cart_cp_user" type="relfk" layers="0"
 	 src-table="public.save_later"
 	 dst-table="public.&quot;user&quot;" reference-fk="user_id_fkey"
-	 src-required="false" dst-required="true"/>
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
 
 <relationship name="rel_shopping_cart_cp_product" type="relfk" layers="0"
 	 src-table="public.save_later"
