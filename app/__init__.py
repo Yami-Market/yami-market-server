@@ -90,6 +90,9 @@ def create_app(config_class: object = DevelopmentConfig):
     from app.routers.credit_card import bp as credit_card_bp
     app.register_blueprint(credit_card_bp)
 
+    from app.routers.order import bp as order_bp
+    app.register_blueprint(order_bp)
+
     app.logger.debug(app.url_map)
 
     return app
