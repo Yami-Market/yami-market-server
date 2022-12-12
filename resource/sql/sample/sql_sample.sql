@@ -59,9 +59,3 @@ FROM "order"
                     ON "order".credit_card_id = c.c_id;
 
 
-
-SELECT id AS address_id,
-       ROW_TO_JSON(t)
-FROM (SELECT *
-      FROM address
-      WHERE user_id = 'nQdP5R7WoBse') AS t
