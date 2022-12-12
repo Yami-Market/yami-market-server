@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="6,294" last-zoom="0.8" max-obj-count="16"
+<dbmodel pgmodeler-ver="1.0.0-beta" use-changelog="false" last-position="172,0" last-zoom="1.1" max-obj-count="16"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -488,9 +488,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.category" reference-fk="category_id_fkey"
 	 src-required="false" dst-required="false">
 	<line>
-		<position x="1849.84" y="819.975"/>
-	<position x="1849.84" y="747"/>
-	<position x="1731.23" y="747"/>
+		<position x="1850.01" y="819.975"/>
+	<position x="1850.01" y="747"/>
+	<position x="1731.34" y="747"/>
 	</line>
 	<label ref-type="name-label">
 		<position x="66.1983" y="42.3"/>

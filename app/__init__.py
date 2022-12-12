@@ -66,11 +66,8 @@ def create_app(config_class: object = DevelopmentConfig):
     from app.routers.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
 
-    from app.routers.signup import bp as signup_bp
-    app.register_blueprint(signup_bp)
-
-    from app.routers.login import bp as login_bp
-    app.register_blueprint(login_bp)
+    from app.routers.auth import bp as auth_bp
+    app.register_blueprint(auth_bp)
 
     from app.routers.shopping_cart import bp as shopping_cart_bp
     app.register_blueprint(shopping_cart_bp)
