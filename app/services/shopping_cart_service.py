@@ -133,3 +133,15 @@ def delete_user_shopping_cart_product(user: User, product_id: str):
             ))
 
             conn.commit()
+
+
+def clear_shopping_cart(user: User):
+    with pool.connection() as conn:
+        with conn.cursor() as cursor:
+            sql = """delete from public.shopping_cart
+                        where user_id = %s;
+                    """
+
+            cursor.execute(sql, (user.id, ))
+
+            conn.commit()
