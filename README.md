@@ -7,7 +7,7 @@ This is Yami Market API server with PostgreSQL database.
 **Note**: It **ONLY** test on Python 3.10+. If you get any error,
 please use Python 3.10+. If you still get any error, please open an issue.
 
-````bash
+```bash
 # Download the source code
 git clone https://github.com/Yami-Market/yami-market-server
 
@@ -19,7 +19,7 @@ source venv/bin/activate
 
 # Install the dependencies
 pip install -r requirements.txt
-
+```
 
 # Create a PostgreSQL database
 
@@ -29,14 +29,13 @@ Run the following SQl files to create the database and tables:
 2. `resource/sql/stage/handle_stage.sql`
 3. `resource/sql/view/category_view.sql`
 
-
 ## Environment Variables
 
 Create a Flask SECRET_KEY and a JWT SECRET_KEY by running the following command:
 
 ```bash
 python -c 'import secrets; print(secrets.token_hex())'
-````
+```
 
 Create a `.env` file in the root directory and add the following:
 
